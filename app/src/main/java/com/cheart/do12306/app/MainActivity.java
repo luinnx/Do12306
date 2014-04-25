@@ -1,6 +1,7 @@
 package com.cheart.do12306.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -16,12 +17,14 @@ import android.widget.ImageView;
 
 import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
+import com.cheart.do12306.app.view.QueryActivity;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
-    ClientCore core = null;
+    public static ClientCore core = null;
     public static final String INDEX = "https://kyfw.12306.cn/otn/";
     public static final String GET_RANDOM_NEW = "https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew.do?module=login&rand=sjrand";
     public static final String POST_CHECK_RANDOM_CODE = "https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn";
@@ -140,6 +143,8 @@ public class MainActivity extends Activity {
             String resultUserLogin = core.postRequest(
                     MainActivity.this, USER_LOGIN, paramsUserLogin,
                     HttpsHeader.login(), null, false, false);
+            Intent intent = new Intent(MainActivity.this, QueryActivity.class);
+            MainActivity.this.startActivity(intent);
 
 
         }
