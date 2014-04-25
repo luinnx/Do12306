@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
     public static final String POST_LOGIN_ASYNC_SUGGEST = "https://kyfw.12306.cn/otn/login/loginAysnSuggest";
     public static final String USER_LOGIN = "https://kyfw.12306.cn/otn/login/userLogin";
 
-    //Handlaer
+
 
 
     public static final int WHAT_GET_RANDOM_CODE = 1;
