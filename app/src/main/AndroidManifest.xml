@@ -20,6 +20,22 @@
             android:name="com.cheart.do12306.app.view.QueryActivity"
             android:label="@string/title_activity_query" >
         </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.ResultQueryActivityListActivity"
+            android:label="@string/title_resultqueryactivity_list" >
+        </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.ResultQueryActivityDetailActivity"
+            android:label="@string/title_resultqueryactivity_detail"
+            android:parentActivityName="com.cheart.do12306.app.ResultQueryActivityListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cheart.do12306.app.view.ResultQueryActivityListActivity" />
+        </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.ShowQueryResult"
+            android:label="@string/title_activity_show_query_result" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -4,5 +4,9 @@
     <string name="app_name">Do12306</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_query">QueryActivity</string>
+    <string name="title_resultqueryactivity_list">Items</string>
+    <string name="title_resultqueryactivity_detail">ResultQueryActivity Detail</string>
+    <string name="title_activity_show_query_result">ShowQueryResult</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

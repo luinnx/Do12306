@@ -1,0 +1,10 @@
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/resultqueryactivity_list"
+    android:name="com.cheart.do12306.app.view.ResultQueryActivityListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    tools:context="com.cheart.do12306.app.view.ResultQueryActivityListActivity"
+    tools:layout="@android:layout/list_content" />

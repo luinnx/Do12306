@@ -2,6 +2,7 @@ package com.cheart.do12306.app.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QueryActivity extends Activity {
@@ -32,6 +35,7 @@ public class QueryActivity extends Activity {
     private EditText et_date;
     private Button bt_submit;
 
+    public static List<Map<String, String>> QUERY_RESULT_LIST = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +49,18 @@ public class QueryActivity extends Activity {
     public void init() {
 
         stationsMap = new HashMap<String, String>();
+        QUERY_RESULT_LIST = new ArrayList<Map<String, String>>();
         initView();
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new QueryTicketTask(QueryActivity.this).execute(new String[] {
+                new QueryTicketTask(QueryActivity.this).execute(new String[]{
                         stationsMap.get(et_from.getText().toString()),
                         stationsMap.get(et_to.getText().toString()),
                         et_date.getText().toString()
                 });
+
+
             }
         });
 

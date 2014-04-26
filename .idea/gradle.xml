@@ -8,8 +8,8 @@
         <option name="gradleHome" value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.10-all/6vpvhqu0efs1fqmqr2decq1v12/gradle-1.10" />
         <option name="modules">
           <set>
-            <option value="C:\Users\cheart\AndroidStudioProjects\Do12306" />
-            <option value="C:\Users\cheart\AndroidStudioProjects\Do12306\app" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
       </GradleProjectSettings>
