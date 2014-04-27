@@ -17,9 +17,16 @@ import android.widget.ImageView;
 
 import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
+import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.view.QueryActivity;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends Activity {
@@ -30,7 +37,7 @@ public class MainActivity extends Activity {
     public static final String POST_CHECK_RANDOM_CODE = "https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn";
     public static final String POST_LOGIN_ASYNC_SUGGEST = "https://kyfw.12306.cn/otn/login/loginAysnSuggest";
     public static final String USER_LOGIN = "https://kyfw.12306.cn/otn/login/userLogin";
-
+    public static List<Passenger> PASSENGERS = null;
 
 
 
@@ -106,8 +113,8 @@ public class MainActivity extends Activity {
         String password;
         String randomCode;
         LoginThread(String userName, String password, String randomCode) {
-            this.userName = userName;
-            this.password = password;
+            this.userName = "jhai2391l";//userName;
+            this.password = "aiing1391liujh";//password;
             this.randomCode = randomCode;
         }
 
@@ -143,8 +150,32 @@ public class MainActivity extends Activity {
             String resultUserLogin = core.postRequest(
                     MainActivity.this, USER_LOGIN, paramsUserLogin,
                     HttpsHeader.login(), null, false, false);
+            getPassenger();
             Intent intent = new Intent(MainActivity.this, QueryActivity.class);
             MainActivity.this.startActivity(intent);
+
+
+        }
+
+        public void getPassenger() {
+
+            String getPassengerDTDs = "https://kyfw.12306.cn/otn/confirmPassenger/getPassengerDTOs";
+            String resultGetPassengerDTDs = MainActivity.core.postRequest(MainActivity.this,
+                    getPassengerDTDs,
+                    new HashMap<String, String>(), HttpsHeader.initDc(),
+                    null,
+                    true,
+                    false);
+            System.out.println("resultGetPassengerDTDs" + resultGetPassengerDTDs);
+            JsonObject object = new JsonParser().parse(resultGetPassengerDTDs)
+                    .getAsJsonObject();
+            JsonArray objects = object.get("data").getAsJsonObject()
+                    .get("normal_passengers").getAsJsonArray();
+            PASSENGERS = new Gson().fromJson(objects,
+                    new TypeToken<List<Passenger>>() {
+                    }.getType());
+
+            Log.v(TAG, "PASSENGER" + PASSENGERS.get(1).getPassenger_name());
 
 
         }

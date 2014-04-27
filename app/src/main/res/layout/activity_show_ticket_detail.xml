@@ -1,0 +1,303 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.cheart.do12306.app.view.ShowTicketDetail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_showTicketDetail_stationTrainCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="K1234"
+                android:textSize="35sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/tv_showTicketDetail_lishi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="历时:"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_showTicketDetail_startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="(起始)12:20"
+                android:textSize="23sp" />
+
+            <ImageView
+
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="20dip"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_showTicketDetail_arriveTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="12:20(终到)"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dip">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableLayout>
+
+                    <TableRow android:gravity="center_horizontal"
+
+                        >
+
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_wz" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_yz" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_rz" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_yw" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_rw" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_gw" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_zy" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_ze" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_zd" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="@string/ticket_seat_type_swz" />
+
+
+                    </TableRow>
+
+                    <TableRow android:gravity="center_horizontal"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_wzNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_yzNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_rzNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_ywNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_rwNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_gwNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_zyNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_zeNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_ztNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+                        <TextView
+                            android:id="@+id/tv_showTicketDetail_swzNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingEnd="4dip"
+                            android:paddingStart="4dip"
+                            android:text="硬座" />
+
+
+
+                    </TableRow>
+
+                </TableLayout>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/bt_showTicketDetail_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提交"/>
+
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

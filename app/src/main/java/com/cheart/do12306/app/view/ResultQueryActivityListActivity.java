@@ -37,11 +37,9 @@ public class ResultQueryActivityListActivity extends FragmentActivity
             QueryTicketTask.ARRIVE_TIME,
             QueryTicketTask.YZ_NUM,
             QueryTicketTask.RZ_NUM,
-            QueryTicketTask.YW_NUM,
-            QueryTicketTask.RW_NUM,
-            QueryTicketTask.ZY_NUM,
-            QueryTicketTask.ZE_NUM,
-            QueryTicketTask.SWZ_NUM,
+            QueryTicketTask.WP_NUM,
+            QueryTicketTask.DC_NUM,
+
     };
 
     public static int[] TO = new int[] {
@@ -50,11 +48,9 @@ public class ResultQueryActivityListActivity extends FragmentActivity
             R.id.tv_resultQuery_arriveTime,
             R.id.tv_resultQuery_yzNum,
             R.id.tv_resultQuery_rzNum,
-            R.id.tv_resultQuery_ywNum,
-            R.id.tv_resultQuery_rwNum,
-            R.id.tv_resultQuery_zyNum,
-            R.id.tv_resultQuery_zeNum,
-            R.id.tv_resultQuery_swzNum,
+            R.id.tv_resultQuery_wpNum,
+            R.id.tv_resultQuery_dcNum,
+
 
     };
 

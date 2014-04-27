@@ -36,6 +36,10 @@
             android:name="com.cheart.do12306.app.view.ShowQueryResult"
             android:label="@string/title_activity_show_query_result" >
         </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.ShowTicketDetail"
+            android:label="@string/title_activity_show_ticket_detail" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

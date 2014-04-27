@@ -1,9 +1,11 @@
 package com.cheart.do12306.app.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by cheart on 4/26/2014.
  */
-public class BaseData {
+public class BaseData implements Serializable {
 
     BaseQueryLeft queryLeftNewDTO;
     String secretStr;

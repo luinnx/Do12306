@@ -1,20 +1,33 @@
 package com.cheart.do12306.app.view;
 
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.cheart.do12306.app.R;
+import com.cheart.do12306.app.adapter.ResultQueryAdapter;
+import com.cheart.do12306.app.domain.BaseData;
+import com.cheart.do12306.app.domain.BaseQueryLeft;
+import com.cheart.do12306.app.task.QueryTicketTask;
+
+import java.util.List;
 
 public class ShowQueryResult extends Activity {
 
 
     private static final String TAG = "ShowQueryResult";
+    public static List<BaseQueryLeft> TICKET_LIST;
+    public static List<BaseData> TICKET_BASEDATA_LIST;
     private ListView list = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +45,17 @@ public class ShowQueryResult extends Activity {
                 ResultQueryActivityListActivity.TO
         ));
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ShowQueryResult.this, ShowTicketDetail.class);
+                intent.putExtra("ticket_info", ShowQueryResult.TICKET_LIST.get(i));
+                intent.putExtra("ticket_info_baseData", ShowQueryResult.TICKET_BASEDATA_LIST.get(i));
+                startActivity(intent);
+            }
+        });
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

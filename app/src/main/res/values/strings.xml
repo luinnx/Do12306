@@ -8,5 +8,21 @@
     <string name="title_resultqueryactivity_detail">ResultQueryActivity Detail</string>
     <string name="title_activity_show_query_result">ShowQueryResult</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_show_ticket_detail">ShowTicketDetail</string>
+
+
+    <!--车票席位-->
+
+    <string name="ticket_seat_type_wz">无座</string>
+    <string name="ticket_seat_type_yz">硬座</string>
+    <string name="ticket_seat_type_rz">软座</string>
+    <string name="ticket_seat_type_yw">硬卧</string>
+    <string name="ticket_seat_type_rw">软卧</string>
+    <string name="ticket_seat_type_gw">高卧</string>
+    <string name="ticket_seat_type_zy">一等</string>
+    <string name="ticket_seat_type_ze">二等</string>
+    <string name="ticket_seat_type_zd">特等</string>
+    <string name="ticket_seat_type_swz">商务</string>
+
 
 </resources>

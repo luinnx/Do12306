@@ -20,7 +20,7 @@ public class StringHelper {
         if (null == str || str.equals("") || str.length() == 0) {
             throw new NullPointerException("secret String is null");
         } else {
-            return str.replaceAll("%2B", "+");
+            return str.replaceAll("%2B", "+").replaceAll("%2F", "/").replaceAll("%3D", "=");
         }
 
     }

@@ -1,10 +1,12 @@
 package com.cheart.do12306.app.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by cheart on 4/25/2014.
  */
 
-public class BaseQueryLeft {
+public class BaseQueryLeft implements Serializable{
 
     private int num;
     private String train_no;

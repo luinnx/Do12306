@@ -60,8 +60,8 @@ import com.cheart.do12306.app.util.StringHelper;
 
 public class ClientCore {
     private static final String TAG = "ClientCore";
-    public String JSESSIONID = "";
-    public String BIGipServerotn = "";
+    public static String JSESSIONID = "";
+    public static String BIGipServerotn = "";
     private static X509TrustManager tm = new X509TrustManager() {
         public void checkClientTrusted(X509Certificate[] xcs, String string)
                 throws CertificateException {

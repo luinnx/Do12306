@@ -1,6 +1,7 @@
 package com.cheart.do12306.app.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.PriorityQueue;
 public class ResultQueryAdapter extends SimpleAdapter {
     List<Map<String, String>> data;
     Context context;
+    public static final String TAG = "ResultQueryAdapter";
 
 
     public ResultQueryAdapter(Context context,
@@ -27,6 +29,7 @@ public class ResultQueryAdapter extends SimpleAdapter {
                               int[] to) {
 
         super(context, data, resource, from, to);
+
     }
 
 
@@ -64,12 +67,12 @@ public class ResultQueryAdapter extends SimpleAdapter {
                     tv_resultQuery_arriveTime);
             holder.tv_yzNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_yzNum);
             holder.tv_rzNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_rzNum);
-            holder.tv_ywNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_ywNum);
-            holder.tv_rwNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_rwNum);
-            holder.tv_zyNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_zyNum);
-            holder.tv_zeNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_zeNum);
-            holder.tv_swzNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_swzNum);
+            holder.tv_wpNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_wpNum);
+            holder.tv_dcNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_dcNum);
+
             convertView.setTag(holder);
+
+
 
         } else {
             holder = (ViewHolder)convertView.getTag();
@@ -81,24 +84,19 @@ public class ResultQueryAdapter extends SimpleAdapter {
         holder.tv_arriveTime.setText(data.get(position).get("arrive_time"));
         holder.tv_yzNum.setText(data.get(position).get("yz_num"));
         holder.tv_rzNum.setText(data.get(position).get("rz_num"));
-        holder.tv_ywNum.setText(data.get(position).get("yw_num"));
-        holder.tv_rwNum.setText(data.get(position).get("rw_num"));
-        holder.tv_zyNum.setText(data.get(position).get("zy_num"));
-        holder.tv_zeNum.setText(data.get(position).get("yr_num"));
-        holder.tv_swzNum.setText(data.get(position).get("swz_num"));
+        holder.tv_wpNum.setText(data.get(position).get("wp_num"));
+        holder.tv_dcNum.setText(data.get(position).get("dc_num"));
+
         return convertView;
     }
 
-    private class ViewHolder {
+    public class ViewHolder {
         private TextView tv_stationTrainCode;
         private TextView tv_startTime;
         private TextView tv_arriveTime;
         private TextView tv_yzNum;
         private TextView tv_rzNum;
-        private TextView tv_ywNum;
-        private TextView tv_rwNum;
-        private TextView tv_zyNum;
-        private TextView tv_zeNum;
-        private TextView tv_swzNum;
+        private TextView tv_wpNum;
+        private TextView tv_dcNum;
     }
 }

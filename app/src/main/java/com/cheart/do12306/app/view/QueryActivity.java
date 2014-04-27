@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cheart.do12306.app.R;
+import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.task.QueryTicketTask;
 
 import java.io.BufferedReader;
@@ -36,6 +37,7 @@ public class QueryActivity extends Activity {
     private Button bt_submit;
 
     public static List<Map<String, String>> QUERY_RESULT_LIST = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +57,9 @@ public class QueryActivity extends Activity {
             @Override
             public void onClick(View view) {
                 new QueryTicketTask(QueryActivity.this).execute(new String[]{
-                        stationsMap.get(et_from.getText().toString()),
-                        stationsMap.get(et_to.getText().toString()),
-                        et_date.getText().toString()
+                        stationsMap.get("哈尔滨"/*et_from.getText().toString()*/),
+                        stationsMap.get("长春"/*et_to.getText().toString()*/),
+                        "2014-05-01"/*et_date.getText().toString()*/
                 });
 
 

@@ -13,6 +13,7 @@ import com.cheart.do12306.app.domain.BaseQueryResult;
 import com.cheart.do12306.app.domain.ResultQueryListItem;
 import com.cheart.do12306.app.view.QueryActivity;
 import com.cheart.do12306.app.view.ShowQueryResult;
+import com.cheart.do12306.app.view.ShowTicketDetail;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -34,6 +35,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
 
     private static final String TAG = "QueryTicketTask";
     private List<Map<String, String>> result;
+    List<BaseQueryLeft> baseQueryLefts;
+    List<BaseData> baseDatas;
     public static final String STATION_TRAIN_CODE = "station_train_code";
     public static final String START_TIME = "start_time";
     public static final String ARRIVE_TIME = "arrive_time";
@@ -44,6 +47,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     public static final String ZY_NUM = "zy_num";
     public static final String ZE_NUM = "ze_num";
     public static final String SWZ_NUM = "swz_num";
+    public static final String WP_NUM = "wp_num";
+    public static final String DC_NUM = "dc_num";
 
     Context context;
 
@@ -54,7 +59,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     @Override
     protected List<Map<String, String>> doInBackground(String... strings) {
         String ticketQueryUrl = "https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date="
-                + strings[2]
+                + "2014-05-01"//strings[2]
                 + "&leftTicketDTO.from_station="
                 + strings[0]
                 + "&leftTicketDTO.to_station="
@@ -70,6 +75,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     @Override
     protected void onPreExecute() {
         result = new ArrayList<Map<String, String>>();
+        baseQueryLefts = new ArrayList<BaseQueryLeft>();
+        baseDatas = new ArrayList<BaseData>();
 
         super.onPreExecute();
     }
@@ -83,6 +90,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     protected void onPostExecute(List<Map<String, String>> resultList) {
         Log.v(TAG, "R" + resultList.size());
         QueryActivity.QUERY_RESULT_LIST = resultList;
+        ShowQueryResult.TICKET_LIST = baseQueryLefts;
+        ShowQueryResult.TICKET_BASEDATA_LIST = baseDatas;
         Intent intent = new Intent(context, ShowQueryResult.class);
         context.startActivity(intent);
 
@@ -90,6 +99,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
 
     protected List<Map<String, String>> parserResultQueryItemFromQueryResult(String str) {
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
         JsonArray datas = new JsonParser().parse(str).getAsJsonObject()
                 .get("data").getAsJsonArray();
         List<BaseData> baseQueryResults = new Gson().fromJson(
@@ -99,7 +109,9 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
         );
 
         for (Iterator<BaseData> it = baseQueryResults.iterator(); it.hasNext();){
-            BaseQueryLeft bql = it.next().getQueryLeftNewDTO();
+            BaseData b = it.next();
+            baseDatas.add(b);
+            BaseQueryLeft bql = b.getQueryLeftNewDTO();
             Map<String, String> m = new HashMap<String, String>();
             m.put(STATION_TRAIN_CODE, bql.getStation_train_code());
             m.put(START_TIME, bql.getStart_time());
@@ -111,8 +123,10 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
             m.put(ZY_NUM, bql.getZy_num());
             m.put(ZE_NUM, bql.getZe_num());
             m.put(SWZ_NUM, bql.getSwz_num());
+            m.put(WP_NUM, bql.getYw_num());
             Log.v(TAG, m.size() + "ms");
             result.add(m);
+            baseQueryLefts.add(bql);
         }
 
         Log.v(TAG, "SIZE" + result.size());
