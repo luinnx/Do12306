@@ -40,6 +40,10 @@
             android:name="com.cheart.do12306.app.view.ShowTicketDetail"
             android:label="@string/title_activity_show_ticket_detail" >
         </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.SelectPassengerActivity"
+            android:label="@string/title_activity_select_passenger" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

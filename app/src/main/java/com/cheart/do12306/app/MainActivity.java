@@ -19,6 +19,7 @@ import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.view.QueryActivity;
+import com.cheart.do12306.app.view.SelectPassengerActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -113,7 +114,7 @@ public class MainActivity extends Activity {
         String password;
         String randomCode;
         LoginThread(String userName, String password, String randomCode) {
-            this.userName = "jhai2391l";//userName;
+            this.userName = "jhai2391lma";//userName;
             this.password = "aiing1391liujh";//password;
             this.randomCode = randomCode;
         }
@@ -151,7 +152,7 @@ public class MainActivity extends Activity {
                     MainActivity.this, USER_LOGIN, paramsUserLogin,
                     HttpsHeader.login(), null, false, false);
             getPassenger();
-            Intent intent = new Intent(MainActivity.this, QueryActivity.class);
+            Intent intent = new Intent(MainActivity.this, SelectPassengerActivity.class);
             MainActivity.this.startActivity(intent);
 
 

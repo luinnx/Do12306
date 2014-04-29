@@ -1,5 +1,6 @@
 package com.cheart.do12306.app.task;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -49,6 +50,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     public static final String SWZ_NUM = "swz_num";
     public static final String WP_NUM = "wp_num";
     public static final String DC_NUM = "dc_num";
+    private ProgressDialog pd;
 
     Context context;
 
@@ -74,6 +76,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
 
     @Override
     protected void onPreExecute() {
+        pd = new ProgressDialog(context);
+        pd.show();
         result = new ArrayList<Map<String, String>>();
         baseQueryLefts = new ArrayList<BaseQueryLeft>();
         baseDatas = new ArrayList<BaseData>();
@@ -94,6 +98,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
         ShowQueryResult.TICKET_BASEDATA_LIST = baseDatas;
         Intent intent = new Intent(context, ShowQueryResult.class);
         context.startActivity(intent);
+        pd.dismiss();
 
     }
 

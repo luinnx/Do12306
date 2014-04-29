@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
@@ -52,6 +53,8 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     public static final int WHAT_GET_RANDOM_CODE = 1;
     public static boolean toSubmit = false;
     public static boolean toCheck = false;
+    public static boolean randomCodeIsTrue = false;
+    public static String orderId = "null";
     Context context;
     LayoutInflater li;
     View dialogView;
@@ -84,7 +87,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
             public void handleMessage(Message msg) {
                 if (msg.what == WHAT_GET_RANDOM_CODE) {
                     Bitmap b = (Bitmap) msg.obj;
-                   iv_randomCode.setImageBitmap(b);
+                    iv_randomCode.setImageBitmap(b);
                 }
 
             }
@@ -92,13 +95,14 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         bt_refush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSubmitRadomCode();
+                submitOrder();
             }
         });
 
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pd.show();
                 randomCodeSubmitOrder = et_randomCode.getText().toString();
                 toSubmit = true;
                 toCheck = true;
@@ -113,10 +117,18 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
                 dialogShowRandomCode.dismiss();
             }
         });
-        doInBackground();
+
 
     }
+
     protected void initView() {
+        li = (LayoutInflater) context.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pd = new ProgressDialog(context);
+        dialogView = li.inflate(R.layout.submit_order_random_code_dialog, null);
+        dialogShowRandomCode = new AlertDialog.Builder(context).
+                setTitle("验证码").setView(dialogView).create();
+        dialogShowRandomCode.show();
         et_randomCode = (EditText) dialogView.findViewById(R.id.et_submit_randomCode);
         iv_randomCode = (ImageView) dialogView.findViewById(R.id.iv_submit_randomCode);
         bt_refush = (Button) dialogView.findViewById(R.id.bt_submit_refush);
@@ -126,26 +138,20 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        li = (LayoutInflater) context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        dialogView = li.inflate(R.layout.submit_order_random_code_dialog, null);
-        dialogShowRandomCode = new AlertDialog.Builder(context).
-                setTitle("验证码").setView(dialogView).create();
-        dialogShowRandomCode.show();
-
-        pd = new ProgressDialog(context);
-
         init();
+
+
         submitData = new SubmitData();
         submitRequest = new BaseData();
         submitRequest = ShowTicketDetail.SUBMIT_BASEDATA;
         randomCodeSubmitOrder = "";
-        submitPassenger = MainActivity.PASSENGERS.get(8);
-        super.onPreExecute();
+        submitPassenger = MainActivity.PASSENGERS.get(3);
+
     }
 
     @Override
     protected void onPostExecute(String s) {
+        pd.dismiss();
         super.onPostExecute(s);
     }
 
@@ -168,7 +174,6 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         submitOrder();
 
 
-
         return null;
     }
 
@@ -186,6 +191,8 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         result = MainActivity.core
                 .getRequest(context, queryOrderWaitTime, null, HttpsHeader.checkOrder(),
                         null, false);
+
+        Log.v(TAG, "queryOrderWaitTime" + result);
 
         return result;
     }
@@ -234,7 +241,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         paramsAutoSubmitOrderRequest.put("cancel_flag", "2");
         paramsAutoSubmitOrderRequest.put("bed_level_order_num",
                 "000000000000000000000000000000");
-        Log.v(TAG, "" +  getPassengerTicketStr());
+        Log.v(TAG, "" + getPassengerTicketStr());
         paramsAutoSubmitOrderRequest.put("passengerTicketStr",
                 getPassengerTicketStr());//
         paramsAutoSubmitOrderRequest.put("oldPassengerStr",
@@ -315,6 +322,24 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         return resultMap;
     }
 
+    private String parderOrderIdFromWaitTime(String str) {
+        String result = "";
+        JsonObject obj = new JsonParser().parse(str).getAsJsonObject().get("data").getAsJsonObject();
+        Log.v(TAG, "dataobj" + obj);
+        Log.v(TAG, "JsonObj" + obj.get("orderId"));
+        if(obj.get("orderId") == null || obj.get("orderId").equals("")){
+            result = "null";
+        } else{
+            result = obj.get("orderId").getAsString();
+        }
+
+
+
+       // result = obj.get("orderId") == null || obj.get("orderId").equals("") ? "null" : obj.get("orderId").getAsString();
+
+        return result;
+    }
+
     public String getQueueCountAsync() {
         String result = "";
         Map<String, String> paramsGetQueueCountAsync = new HashMap<String, String>();
@@ -378,11 +403,30 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
 
             Log.v(TAG, "autoSubmitOrderRequest" + autoSubmitOrderRequest());
             Log.v(TAG, "getQueueCountAsync" + getQueueCountAsync());
-            Log.v(TAG, "getRandomCodeSubmitOrder and check" + checkSubmitRandomCode());
-            Log.v(TAG, "confirmSingleForQueueAsync" + confirmSingleForQueueAsync());
-            Log.v(TAG, "queryOrderWaitTime" + queryOrderWaitTime());
+            String resultCheckRandom = "";
+            resultCheckRandom = new JsonParser().parse(checkSubmitRandomCode()).
+                    getAsJsonObject().get("data").getAsString();
+            if (resultCheckRandom.equals("N")) {
+                randomCodeIsTrue = false;
+                toCheck = false;
+                pd.dismiss();
+            } else if (resultCheckRandom.equals("Y")){
+                randomCodeIsTrue = true;
+            }
+            while (!randomCodeIsTrue) {
+                run();
+            }
+
+            dialogShowRandomCode.dismiss();
+         //   Log.v(TAG, "confirmSingleForQueueAsync" + confirmSingleForQueueAsync());
+            /*orderId = parderOrderIdFromWaitTime(queryOrderWaitTime());
+            while (orderId.equals("null")) {
+                orderId = parderOrderIdFromWaitTime(queryOrderWaitTime());
+            }*/
+         //   Log.v(TAG, "maybe success!");
         }
     }
+
     public String checkSubmitRandomCode() {
         String result = "";
         Bitmap bitmap = BitmapFactory.decodeStream(MainActivity.core.getPicInputStream(
@@ -396,8 +440,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         msg.obj = bitmap;
         msg.what = WHAT_GET_RANDOM_CODE;
         handler.sendMessage(msg);
-        while (!toCheck){
-
+        while (!toCheck) {
 
 
         }
@@ -411,6 +454,9 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         result = MainActivity.core.postRequest(context,
                 checkRandomCodeAsync, paramseCheckRandomAsync,
                 HttpsHeader.postCheckCode(false), null, false, false);
+        Log.v(TAG, "getRandomCodeSubmitOrder and check" + result);
+
+
 
         return result;
     }
