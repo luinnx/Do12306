@@ -23,5 +23,10 @@
     <string name="ticket_seat_type_zd">特等</string>
     <string name="ticket_seat_type_swz">商务</string>
     <string name="title_activity_select_passenger">SelectPassengerActivity</string>
+    <string name="title_activity_submit_order">SubmitOrderActivity</string>
+
+
+    <!-- ID -->
+
 
 </resources>

@@ -20,6 +20,7 @@ import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.view.QueryActivity;
 import com.cheart.do12306.app.view.SelectPassengerActivity;
+import com.cheart.do12306.app.view.SubmitOrderActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -40,6 +41,8 @@ public class MainActivity extends Activity {
     public static final String USER_LOGIN = "https://kyfw.12306.cn/otn/login/userLogin";
     public static List<Passenger> PASSENGERS = null;
 
+    public static Map<String,String> SEAT_TYPE_MAP;
+    public static Map<String,String> TICKET_TYPE;
 
 
     public static final int WHAT_GET_RANDOM_CODE = 1;
@@ -62,6 +65,17 @@ public class MainActivity extends Activity {
     public void init() {
         core = new ClientCore();
         initView();
+        TICKET_TYPE = new HashMap<String, String>();
+        SEAT_TYPE_MAP = new HashMap<String, String>();
+        SEAT_TYPE_MAP.put("二等座", "O");
+        SEAT_TYPE_MAP.put("一等座", "M");
+        SEAT_TYPE_MAP.put("特等座", "P");
+
+        TICKET_TYPE.put("成人票", "1");
+        TICKET_TYPE.put("孩票", "2");
+        TICKET_TYPE.put("学生票", "3");
+        TICKET_TYPE.put("伤残军人票", "4");
+
 
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +128,7 @@ public class MainActivity extends Activity {
         String password;
         String randomCode;
         LoginThread(String userName, String password, String randomCode) {
-            this.userName = "jhai2391lma";//userName;
+            this.userName = "jhai2391l";//userName;
             this.password = "aiing1391liujh";//password;
             this.randomCode = randomCode;
         }
@@ -152,7 +166,7 @@ public class MainActivity extends Activity {
                     MainActivity.this, USER_LOGIN, paramsUserLogin,
                     HttpsHeader.login(), null, false, false);
             getPassenger();
-            Intent intent = new Intent(MainActivity.this, SelectPassengerActivity.class);
+            Intent intent = new Intent(MainActivity.this, SubmitOrderActivity.class);
             MainActivity.this.startActivity(intent);
 
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableRow
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_submitOrder_ticket_info_item_passengerName"
+                android:layout_weight="1.9"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:text="NAME"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <Spinner
+                android:id="@+id/sp_submitOrder_ticket_info_ticket_Type"
+                android:layout_weight="1.8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:spinnerMode="dialog"
+                android:focusable="true">
+
+            </Spinner>
+
+            <Spinner
+                android:id="@+id/sp_submitOrder_ticket_info_seat_Type"
+                android:layout_weight="1.8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:spinnerMode="dialog"
+                android:focusable="true">
+
+            </Spinner>
+
+            <TextView
+                android:id="@+id/tv_submitOrder_ticket_info_item_passengerIdNo"
+                android:layout_weight="1"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:text="ID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+
+
+    </TableRow>
+
+</LinearLayout>
