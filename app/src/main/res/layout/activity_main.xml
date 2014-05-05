@@ -2,91 +2,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_bg"
     tools:context="${packageName}.${activityClass}">
 
     <LinearLayout
-
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UserName" />
+            android:orientation="vertical">
 
             <EditText
+                android:textColorHint="@color/main_text_et_hint"
+                android:paddingBottom="10dp"
+                android:background="@color/main_et_bg"
+                android:hint="用户名"
                 android:id="@+id/et_main_username"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="password" />
-
+                android:layout_height="50dp" />
             <EditText
+                android:textColorHint="@color/main_text_et_hint"
+                android:paddingTop="10dp"
+                android:background="@color/main_et_bg"
+                android:hint="密码"
                 android:id="@+id/et_main_password"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="50dp" />
+
 
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UserName" />
-            <EditText
-                android:id="@+id/et_main_random_code"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-
-                android:id="@+id/iv_main_randomCode"
-                android:layout_width="100dp"
-                android:layout_height="30dp" />
-            <Button
-                android:id="@+id/bt_main_refush_randomCode"
-                android:text="refush"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
 
         <LinearLayout
+            android:paddingTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
+
                 android:id="@+id/bt_main_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lgon"/>
+                android:text="登陆"/>
 
         </LinearLayout>
 

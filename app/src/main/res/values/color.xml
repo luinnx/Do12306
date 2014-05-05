@@ -5,4 +5,7 @@
     <color name="show_ticket_detail_num_n"></color>
     <color name="show_ticket_detail_num_"></color>
     <color name="show_ticket_detail_num_w"></color>-->
+    <color name="main_bg">#edf1f4</color>
+    <color name="main_et_bg">#ffffff</color>
+    <color name="main_text_et_hint">#afafaf</color>
 </resources>

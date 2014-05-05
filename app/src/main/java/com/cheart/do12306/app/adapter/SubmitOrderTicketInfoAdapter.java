@@ -174,8 +174,6 @@ public class SubmitOrderTicketInfoAdapter extends SimpleAdapter {
         @Override
         public long getItemId(int position) {
 
-
-
             return position + 1;
         }
     }

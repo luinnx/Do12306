@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+
+    <EditText
+        android:id="@+id/et_main_dialog_randomCode"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:visibility="visible"
+        android:id="@+id/iv_main_dialog_randomCode"
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/bt_main_dialog_refush"
+        android:text="刷新"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_main_dialog_ok"
+            android:text="确定"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bt_main_dialog_cancel"
+            android:text=" 取消"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
