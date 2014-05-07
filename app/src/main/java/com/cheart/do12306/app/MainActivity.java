@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
+import com.cheart.do12306.app.view.QueryActivity;
 import com.cheart.do12306.app.view.SubmitOrderActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -33,6 +35,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +48,7 @@ public class MainActivity extends Activity {
     public static final String POST_LOGIN_ASYNC_SUGGEST = "https://kyfw.12306.cn/otn/login/loginAysnSuggest";
     public static final String USER_LOGIN = "https://kyfw.12306.cn/otn/login/userLogin";
     public static List<Passenger> PASSENGERS = null;
+    public static Map<String, Integer> PASSENGERS_MAP = null;
 
     public static Map<String, String> SEAT_TYPE_MAP;
     public static Map<String, String> TICKET_TYPE;
@@ -78,6 +82,7 @@ public class MainActivity extends Activity {
     public void init() {
         core = new ClientCore();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        PASSENGERS_MAP = new HashMap<String, Integer>();
         initView();
         handler = new Handler() {
             @Override
@@ -95,10 +100,17 @@ public class MainActivity extends Activity {
         SEAT_TYPE_MAP.put("二等座", "O");
         SEAT_TYPE_MAP.put("一等座", "M");
         SEAT_TYPE_MAP.put("特等座", "P");
+        SEAT_TYPE_MAP.put("硬座","1");
+        SEAT_TYPE_MAP.put("软座","2");
+        SEAT_TYPE_MAP.put("硬卧","3");
+        SEAT_TYPE_MAP.put("软卧","4");
+        SEAT_TYPE_MAP.put("高级软卧","6");
+        SEAT_TYPE_MAP.put("商务座","9");
 
-        TICKET_TYPE.put("成人票", "1");
+
+        TICKET_TYPE.put("成人", "1");
         TICKET_TYPE.put("孩票", "2");
-        TICKET_TYPE.put("学生票", "3");
+        TICKET_TYPE.put("学生", "3");
         TICKET_TYPE.put("伤残军人票", "4");
 
 
@@ -325,8 +337,8 @@ public class MainActivity extends Activity {
             private Thread runThread;
 
             LoginThread(String userName, String password, String randomCode) {
-                this.userName = "jhai2391lma";//userName;
-                this.password = "aiing1391liuj";//password;
+                this.userName = "jhai2391liu";//userName;
+                this.password = "aiing1391liujh";//password;
                 this.randomCode = randomCode;
             }
 
@@ -358,6 +370,8 @@ public class MainActivity extends Activity {
 
                         break;
                     case RETURN_LOGIN_SUCCESS:
+                        Intent intent = new Intent(MainActivity.this, QueryActivity.class);
+                        MainActivity.this.startActivity(intent);
                         break;
                 }
             }
@@ -435,11 +449,8 @@ public class MainActivity extends Activity {
                         HttpsHeader.login(), null, false, false);
                 getPassenger();
                 finishedLogin = true;
-                Intent intent = new Intent(MainActivity.this, SubmitOrderActivity.class);
-                MainActivity.this.startActivity(intent);
+
                 return RETURN_LOGIN_SUCCESS;
-
-
             }
 
             public void getPassenger() {
@@ -460,11 +471,21 @@ public class MainActivity extends Activity {
                         new TypeToken<List<Passenger>>() {
                         }.getType()
                 );
-
+                initPassengerMap(PASSENGERS);
                 Log.v(TAG, "PASSENGER" + PASSENGERS.get(1).getPassenger_name());
 
 
             }
+
+            public void initPassengerMap(List<Passenger> list) {
+
+                for (int i = 0; i < list.size(); i++){
+                    PASSENGERS_MAP.put(list.get(i).getPassenger_name(), i);
+                }
+
+            }
+
+
         }
 
         class GetRandomCodeThread implements Runnable {

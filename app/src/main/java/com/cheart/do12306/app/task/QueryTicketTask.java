@@ -61,7 +61,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     @Override
     protected List<Map<String, String>> doInBackground(String... strings) {
         String ticketQueryUrl = "https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date="
-                + "2014-05-01"//strings[2]
+                + "2014-05-07"//strings[2]
                 + "&leftTicketDTO.from_station="
                 + strings[0]
                 + "&leftTicketDTO.to_station="
@@ -96,9 +96,19 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
         QueryActivity.QUERY_RESULT_LIST = resultList;
         ShowQueryResult.TICKET_LIST = baseQueryLefts;
         ShowQueryResult.TICKET_BASEDATA_LIST = baseDatas;
+        initTicketMap(baseDatas);
         Intent intent = new Intent(context, ShowQueryResult.class);
         context.startActivity(intent);
         pd.dismiss();
+
+    }
+
+    protected void initTicketMap(List<BaseData> baseDataList){
+        ShowQueryResult.TICKET_MAP = new HashMap<String, Integer>();
+        for (int i = 0; i < baseDataList.size(); i++){
+            ShowQueryResult.TICKET_MAP.put(baseDataList.get(i).getQueryLeftNewDTO().
+                    getStation_train_code(),i);
+        }
 
     }
 

@@ -23,6 +23,7 @@ public class ShowTicketDetail extends ActionBarActivity {
 
     private Button bt_submit;
     private BaseQueryLeft ticketInfo;
+    public static String CAN_TICKET_TYPE;
 
     public static BaseData SUBMIT_BASEDATA;
 
@@ -53,6 +54,31 @@ public class ShowTicketDetail extends ActionBarActivity {
         init();
 
 
+
+    }
+
+    public void initCanTicketType(BaseQueryLeft baseQueryLeft) {
+        StringBuffer sb = new StringBuffer();
+        if (!baseQueryLeft.getYz_num().equals("无") && !baseQueryLeft.getYz_num().equals("--")){
+            sb.append("硬座" + ",");
+        } else if (!baseQueryLeft.getRz_num().equals("无") && !baseQueryLeft.getRz_num().equals("--")){
+            sb.append("软座" + ",");
+        } else if (!baseQueryLeft.getYw_num().equals("无") && !baseQueryLeft.getYw_num().equals("--")){
+            sb.append("硬卧" + ",");
+        } else if (!baseQueryLeft.getRw_num().equals("无") && !baseQueryLeft.getRw_num().equals("--")){
+            sb.append("软卧" + ",");
+        } else if (!baseQueryLeft.getGr_num().equals("无") && !baseQueryLeft.getGr_num().equals("--")){
+            sb.append("高级软卧" + ",");
+        } else if (!baseQueryLeft.getZy_num().equals("无") && !baseQueryLeft.getZy_num().equals("--")){
+            sb.append("一等座" + ",");
+        } else if (!baseQueryLeft.getZe_num().equals("无") && !baseQueryLeft.getZe_num().equals("--")){
+            sb.append("二等座" + ",");
+        } else if (!baseQueryLeft.getTz_num().equals("无") && !baseQueryLeft.getTz_num().equals("--")){
+            sb.append("特等座" + ",");
+        } else if (!baseQueryLeft.getSwz_num().equals("无") && !baseQueryLeft.getSwz_num().equals("--")){
+            sb.append("商务座" + ",");
+        }
+        CAN_TICKET_TYPE = sb.toString();
     }
 
     public void init() {
@@ -61,7 +87,10 @@ public class ShowTicketDetail extends ActionBarActivity {
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SubmitOrderTask(ShowTicketDetail.this).execute();
+                Intent intent = new Intent(ShowTicketDetail.this, SubmitOrderActivity.class);
+                intent.putExtra("ticket_info", ticketInfo);
+                startActivity(intent);
+                //new SubmitOrderTask(ShowTicketDetail.this).execute();
             }
         });
     }

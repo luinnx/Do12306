@@ -24,13 +24,16 @@ import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.domain.SubmitData;
+import com.cheart.do12306.app.domain.TicketOrder;
 import com.cheart.do12306.app.util.StringHelper;
 import com.cheart.do12306.app.view.QueryActivity;
 import com.cheart.do12306.app.view.ShowTicketDetail;
+import com.cheart.do12306.app.view.SubmitOrderActivity;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import java.util.logging.LogRecord;
@@ -73,6 +76,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     private String randomCodeSubmitOrder;
     private Dialog dialogShowRandomCode;
     private ProgressDialog pd;
+    private TicketOrder to = null;
 
     public SubmitOrderTask(Context context) {
         this.context = context;
@@ -140,12 +144,18 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     protected void onPreExecute() {
         init();
 
+        for (Iterator<String> it = SubmitOrderActivity.TICKET_INFO_MAP.keySet().iterator();
+             it.hasNext();){
+            to = (TicketOrder) SubmitOrderActivity.TICKET_INFO_MAP.get(it.next());
+            Log.v(TAG , "finally submit" + to.getName());
+        }
+
 
         submitData = new SubmitData();
         submitRequest = new BaseData();
-        submitRequest = ShowTicketDetail.SUBMIT_BASEDATA;
+        submitRequest = to.getBaseData();
         randomCodeSubmitOrder = "";
-        submitPassenger = MainActivity.PASSENGERS.get(3);
+        submitPassenger = to.getPassenger();
 
     }
 
@@ -229,7 +239,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         System.out.println(submitRequest.getQueryLeftNewDTO()
                 .getStation_train_code());
         paramsAutoSubmitOrderRequest.put("secretStr", secretStr);
-        paramsAutoSubmitOrderRequest.put("train_date", "2014-05-01");// data
+        paramsAutoSubmitOrderRequest.put("train_date", "2014-05-07");// data
         paramsAutoSubmitOrderRequest.put("tour_flag", "dc");
         paramsAutoSubmitOrderRequest.put("purpose_codes", "ADULT");
         Log.v(TAG, "from" + submitRequest.getQueryLeftNewDTO().getFrom_station_name());
@@ -293,8 +303,10 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     }
 
     public void initSubmitData() {
-        submitData.setSeatTypeCode("1");// seat type
-        submitData.setTicketTypeCode("1");// ticket type
+        Log.v(TAG, "seat!!!" + MainActivity.SEAT_TYPE_MAP.get(to.getSeatType()) + "ticketType" +
+                MainActivity.TICKET_TYPE.get(to.getTicketType()));
+        submitData.setSeatTypeCode(MainActivity.SEAT_TYPE_MAP.get(to.getSeatType()));// seat type
+        submitData.setTicketTypeCode(MainActivity.TICKET_TYPE.get(to.getTicketType()));// ticket type
         submitData.setName(submitPassenger.getPassenger_name());
         submitData.setPassengerIdTypeCode(submitPassenger
                 .getPassenger_id_type_code());
@@ -325,9 +337,9 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     private String parderOrderIdFromWaitTime(String str) {
         String result = "";
         JsonObject obj = new JsonParser().parse(str).getAsJsonObject().get("data").getAsJsonObject();
-        Log.v(TAG, "dataobj" + obj);
-        Log.v(TAG, "JsonObj" + obj.get("orderId"));
-        if(obj.get("orderId") == null || obj.get("orderId").equals("")){
+        Log.v(TAG, "dataobjtoString" + obj.get("orderId").toString());
+
+        if(obj.get("orderId").toString().equals("null") || obj.get("orderId").equals("")){
             result = "null";
         } else{
             result = obj.get("orderId").getAsString();
@@ -418,12 +430,12 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
             }
 
             dialogShowRandomCode.dismiss();
-         //   Log.v(TAG, "confirmSingleForQueueAsync" + confirmSingleForQueueAsync());
-            /*orderId = parderOrderIdFromWaitTime(queryOrderWaitTime());
+            Log.v(TAG, "confirmSingleForQueueAsync" + confirmSingleForQueueAsync());
+            orderId = parderOrderIdFromWaitTime(queryOrderWaitTime());
             while (orderId.equals("null")) {
                 orderId = parderOrderIdFromWaitTime(queryOrderWaitTime());
-            }*/
-         //   Log.v(TAG, "maybe success!");
+            }
+            Log.v(TAG, "maybe success!");
         }
     }
 

@@ -20,7 +20,10 @@ import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
 import com.cheart.do12306.app.task.QueryTicketTask;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShowQueryResult extends Activity {
 
@@ -28,12 +31,12 @@ public class ShowQueryResult extends Activity {
     private static final String TAG = "ShowQueryResult";
     public static List<BaseQueryLeft> TICKET_LIST;
     public static List<BaseData> TICKET_BASEDATA_LIST;
+    public static Map<String, Integer> TICKET_MAP;
     private ListView list = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_query_result);
-
         list = (ListView) findViewById(R.id.lv_showQueryResult);
         Log.v(TAG, "SET ADAPTER");
         Log.v(TAG, QueryActivity.QUERY_RESULT_LIST.toString());
