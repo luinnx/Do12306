@@ -7,48 +7,92 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请输入验证码"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ffa7b5af"></View>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="10dp"
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
 
 
     <EditText
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1.5"
+        android:textAlignment="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="@drawable/bg_et_login_random_code"
         android:id="@+id/et_main_dialog_randomCode"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
     <ImageView
+        android:layout_weight="1"
         android:visibility="visible"
         android:id="@+id/iv_main_dialog_randomCode"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp" />
 
     <Button
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.5"
+        android:background="#ff4ba9a2"
         android:id="@+id/bt_main_dialog_refush"
         android:text="刷新"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/bt_main_dialog_ok"
-            android:text="确定"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
 
         <Button
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bt_login_random_code_cancel"
             android:id="@+id/bt_main_dialog_cancel"
             android:text=" 取消"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"/>
+        <Button
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bt_login_random_code_ok"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/bt_main_dialog_ok"
+            android:text="确定"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            />
 
 
 

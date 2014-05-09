@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.cheart.do12306.app.R;
 import com.cheart.do12306.app.domain.Passenger;
@@ -33,7 +34,7 @@ public class QueryActivity extends Activity {
     public static Map<String, String> stationsMap;
     private EditText et_from;
     private EditText et_to;
-    private EditText et_date;
+    private Spinner sp_date;
     private Button bt_submit;
 
     public static List<Map<String, String>> QUERY_RESULT_LIST = null;
@@ -110,7 +111,7 @@ public class QueryActivity extends Activity {
     public void initView() {
         et_from = (EditText) findViewById(R.id.et_query_from);
         et_to = (EditText) findViewById(R.id.et_query_to);
-        et_date = (EditText) findViewById(R.id.et_query_date);
+        sp_date = (Spinner) findViewById(R.id.sp_query_date);
         bt_submit = (Button) findViewById(R.id.bt_query_submit);
     }
 

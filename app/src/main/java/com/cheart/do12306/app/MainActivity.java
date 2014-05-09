@@ -188,7 +188,7 @@ public class MainActivity extends Activity {
             listener = new Listener();
             initView();
 
-            new Thread(new GetRandomCodeThread()).start();
+        //    new Thread(new GetRandomCodeThread()).start();
         }
 
         protected void initView() {
@@ -240,7 +240,7 @@ public class MainActivity extends Activity {
 
             dialogLogin = new AlertDialog.Builder(context).setView(dialogView).create();
             Log.v(TAG, "IV" + iv_randomCode);
-
+            dialogLogin.setInverseBackgroundForced(false);
             dialogLogin.show();
 
 
@@ -310,15 +310,17 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.bt_main_dialog_ok:
-                        pd.show();
+                        Intent intent = new Intent(MainActivity.this, QueryActivity.class);
+                        context.startActivity(intent);
+                        /*pd.show();
                         toLogin = true;
                         imm.hideSoftInputFromWindow(et_randomCode.getWindowToken(),0);
-                        break;
+                        */break;
                     case R.id.bt_main_dialog_cancel:
                         dialogLogin.dismiss();
                         break;
                     case R.id.bt_main_dialog_refush:
-                        new Thread(new GetRandomCodeThread()).start();
+                       // new Thread(new GetRandomCodeThread()).start();
                         break;
                 }
             }
