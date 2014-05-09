@@ -44,6 +44,7 @@ public class QueryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query);
         init();
+        loadAllStation();
         Log.v(TAG, stationsMap + "");
 
 
@@ -59,8 +60,8 @@ public class QueryActivity extends Activity {
             public void onClick(View view) {
                 new QueryTicketTask(QueryActivity.this).execute(new String[]{
                         stationsMap.get("哈尔滨"/*et_from.getText().toString()*/),
-                        stationsMap.get("长春"/*et_to.getText().toString()*/),
-                        "2014-05-07"/*et_date.getText().toString()*/
+                        stationsMap.get("北京"/*et_to.getText().toString()*/),
+                        "2014-05-12"/*et_date.getText().toString()*/
                 });
 
 

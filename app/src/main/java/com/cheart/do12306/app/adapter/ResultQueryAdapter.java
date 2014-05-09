@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+import static com.cheart.do12306.app.R.drawable.bg_ll_result_query_train_class_k;
+
 /**
  * Created by cheart on 4/26/2014.
  */
@@ -23,12 +25,14 @@ public class ResultQueryAdapter extends SimpleAdapter {
 
 
     public ResultQueryAdapter(Context context,
-                              List<? extends Map<String, String>> data,
+                              List<Map<String, String>> data,
                               int resource,
                               String[] from,
                               int[] to) {
 
         super(context, data, resource, from, to);
+        this.data = data;
+        this.context = context;
 
     }
 
@@ -70,6 +74,10 @@ public class ResultQueryAdapter extends SimpleAdapter {
             holder.tv_wpNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_wpNum);
             holder.tv_dcNum = (TextView) convertView.findViewById(R.id.tv_resultQuery_dcNum);
 
+
+            holder.tv_train_class = (TextView) convertView.findViewById(R.id.
+                    tv_resultQuery_train_class);
+
             convertView.setTag(holder);
 
 
@@ -86,6 +94,21 @@ public class ResultQueryAdapter extends SimpleAdapter {
         holder.tv_rzNum.setText(data.get(position).get("rz_num"));
         holder.tv_wpNum.setText(data.get(position).get("wp_num"));
         holder.tv_dcNum.setText(data.get(position).get("dc_num"));
+        String trainClassName = data.get(position).get("train_class_name");
+        if (trainClassName.equals("特快")) {
+            holder.tv_train_class.setBackgroundResource(R.drawable.bg_ll_result_query_train_class_t);
+        } else if (trainClassName.equals("")){
+            holder.tv_train_class.setBackgroundResource(R.drawable.bg_ll_result_query_train_class_gc);
+        } else if (trainClassName.equals("动车")){
+            holder.tv_train_class.setBackgroundResource(R.drawable.bg_ll_result_query_train_class_d);
+        } else if (trainClassName.equals("快速")){
+            holder.tv_train_class.setBackgroundResource(R.drawable.bg_ll_result_query_train_class_k);
+        } else if (trainClassName.equals("直达")){
+            holder.tv_train_class.setBackgroundResource(R.drawable.bg_ll_result_query_train_class_z);
+        } else {
+            holder.tv_train_class.setBackgroundResource(R.drawable.bg_ll_result_query_train_class_q);
+        }
+
 
         return convertView;
     }
@@ -98,5 +121,6 @@ public class ResultQueryAdapter extends SimpleAdapter {
         private TextView tv_rzNum;
         private TextView tv_wpNum;
         private TextView tv_dcNum;
+        private TextView tv_train_class;
     }
 }

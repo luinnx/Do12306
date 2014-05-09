@@ -40,7 +40,7 @@ public class ShowQueryResult extends Activity {
         list = (ListView) findViewById(R.id.lv_showQueryResult);
         Log.v(TAG, "SET ADAPTER");
         Log.v(TAG, QueryActivity.QUERY_RESULT_LIST.toString());
-        list.setAdapter(new SimpleAdapter(
+        list.setAdapter(new ResultQueryAdapter(
                 this,
                 QueryActivity.QUERY_RESULT_LIST,
                 R.layout.activity_resultqueryactivity_item,

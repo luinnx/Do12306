@@ -9,8 +9,10 @@
     tools:context="com.cheart.do12306.app.view.ShowQueryResult">
 
     <ListView
+        android:footerDividersEnabled="false"
         android:id="@+id/lv_showQueryResult"
         android:layout_width="match_parent"
+        android:dividerHeight="10dp"
         android:layout_height="match_parent">
 
 

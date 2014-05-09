@@ -188,7 +188,7 @@ public class MainActivity extends Activity {
             listener = new Listener();
             initView();
 
-        //    new Thread(new GetRandomCodeThread()).start();
+            new Thread(new GetRandomCodeThread()).start();
         }
 
         protected void initView() {
@@ -312,15 +312,15 @@ public class MainActivity extends Activity {
                     case R.id.bt_main_dialog_ok:
                         Intent intent = new Intent(MainActivity.this, QueryActivity.class);
                         context.startActivity(intent);
-                        /*pd.show();
+                        pd.show();
                         toLogin = true;
                         imm.hideSoftInputFromWindow(et_randomCode.getWindowToken(),0);
-                        */break;
+                        break;
                     case R.id.bt_main_dialog_cancel:
                         dialogLogin.dismiss();
                         break;
                     case R.id.bt_main_dialog_refush:
-                       // new Thread(new GetRandomCodeThread()).start();
+                        new Thread(new GetRandomCodeThread()).start();
                         break;
                 }
             }

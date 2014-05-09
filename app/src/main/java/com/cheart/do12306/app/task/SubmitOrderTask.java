@@ -239,7 +239,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         System.out.println(submitRequest.getQueryLeftNewDTO()
                 .getStation_train_code());
         paramsAutoSubmitOrderRequest.put("secretStr", secretStr);
-        paramsAutoSubmitOrderRequest.put("train_date", "2014-05-07");// data
+        paramsAutoSubmitOrderRequest.put("train_date", "2014-05-12");// data
         paramsAutoSubmitOrderRequest.put("tour_flag", "dc");
         paramsAutoSubmitOrderRequest.put("purpose_codes", "ADULT");
         Log.v(TAG, "from" + submitRequest.getQueryLeftNewDTO().getFrom_station_name());

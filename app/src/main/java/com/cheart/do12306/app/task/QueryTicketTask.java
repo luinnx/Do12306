@@ -50,6 +50,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     public static final String SWZ_NUM = "swz_num";
     public static final String WP_NUM = "wp_num";
     public static final String DC_NUM = "dc_num";
+    public static final String TRAIN_CLASS = "train_class_name";
     private ProgressDialog pd;
 
     Context context;
@@ -61,7 +62,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     @Override
     protected List<Map<String, String>> doInBackground(String... strings) {
         String ticketQueryUrl = "https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date="
-                + "2014-05-07"//strings[2]
+                + "2014-05-12"//strings[2]
                 + "&leftTicketDTO.from_station="
                 + strings[0]
                 + "&leftTicketDTO.to_station="
@@ -139,6 +140,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
             m.put(ZE_NUM, bql.getZe_num());
             m.put(SWZ_NUM, bql.getSwz_num());
             m.put(WP_NUM, bql.getYw_num());
+            m.put(TRAIN_CLASS, bql.getTrain_class_name());
             Log.v(TAG, m.size() + "ms");
             result.add(m);
             baseQueryLefts.add(bql);
