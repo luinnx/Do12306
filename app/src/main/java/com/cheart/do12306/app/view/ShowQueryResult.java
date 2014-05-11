@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -32,11 +34,23 @@ public class ShowQueryResult extends Activity {
     public static List<BaseQueryLeft> TICKET_LIST;
     public static List<BaseData> TICKET_BASEDATA_LIST;
     public static Map<String, Integer> TICKET_MAP;
+    public static String DATE = "";
     private ListView list = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_query_result);
+        init();
+    }
+
+
+    public void init(){
+        initView();
+    }
+
+    public void initView(){
         list = (ListView) findViewById(R.id.lv_showQueryResult);
         Log.v(TAG, "SET ADAPTER");
         Log.v(TAG, QueryActivity.QUERY_RESULT_LIST.toString());
@@ -57,7 +71,6 @@ public class ShowQueryResult extends Activity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override

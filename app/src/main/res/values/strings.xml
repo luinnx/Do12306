@@ -25,8 +25,8 @@
     <string name="title_activity_select_passenger">SelectPassengerActivity</string>
     <string name="title_activity_submit_order">SubmitOrderActivity</string>
 
-
     <!-- ID -->
 
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>

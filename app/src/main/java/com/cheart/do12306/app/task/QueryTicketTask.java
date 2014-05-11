@@ -61,8 +61,13 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
 
     @Override
     protected List<Map<String, String>> doInBackground(String... strings) {
+
+        ShowQueryResult.DATE = strings[2];
+
+        Log.v(TAG, "QUERY" + strings[0] + strings[1] + strings[2]);
+
         String ticketQueryUrl = "https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date="
-                + "2014-05-12"//strings[2]
+                + strings[2]
                 + "&leftTicketDTO.from_station="
                 + strings[0]
                 + "&leftTicketDTO.to_station="

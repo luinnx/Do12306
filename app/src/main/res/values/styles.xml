@@ -22,6 +22,11 @@
         <item name="android:background">@drawable/bg_ll_query</item>
     </style>
 
+
+    <style name="ll_submit_order">
+        <item name="android:background">@drawable/bg_ll_submit_order</item>
+    </style>
+
     <style name="et_query">
         <item name="android:background">@null</item>
     </style>

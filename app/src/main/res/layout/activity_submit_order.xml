@@ -6,6 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#ffececec"
     tools:context="com.cheart.do12306.app.view.SubmitOrderActivity">
 
 
@@ -23,6 +24,7 @@
             android:gravity="center"
             android:layout_height="wrap_content">
             <TextView
+                android:textColor="#ff9d171b"
                 android:id="@+id/tv_submitOrder_station_train_code"
                 android:textSize="25sp"
                 android:layout_gravity="center"
@@ -37,9 +39,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:textColor="#ffb1b1b1"
                 android:textSize="20sp"
                 android:layout_gravity="center"
-                android:text="selecte passenger"
+                android:text="选择乘车人"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -49,6 +52,8 @@
 
 
         <LinearLayout
+            android:paddingTop="10dp"
+            style="@style/ll_submit_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -57,32 +62,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp">
 
-
                 </ListView>
-
-
-
-
 
         </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="#ffb1b1b1"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:text="乘车信息"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <LinearLayout
+            android:paddingTop="10dp"
+            style="@style/ll_submit_order"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-            
-            <TextView
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ticket Info"
-                android:textSize="25sp"
-                />
-
-
-
-                android:layout_width="match_parent"
-                android:layout_height="150dp">
 
                 <TableLayout
                     android:id="@+id/tb_submitOrder_ticketInfo"
@@ -151,16 +153,21 @@
                     </LinearLayout>
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-
-                <Button
-                    android:id="@+id/bt_submit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SUBMIT"/>
-
-
+            <Button
+                android:textColor="#ffffff"
+                android:background="#ff5095ff"
+                android:id="@+id/bt_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SUBMIT"/>
         </LinearLayout>
 
 

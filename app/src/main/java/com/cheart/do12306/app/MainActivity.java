@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.ArrayMap;
 import android.util.Log;
 
 import android.view.LayoutInflater;
@@ -27,15 +26,14 @@ import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.view.QueryActivity;
-import com.cheart.do12306.app.view.SubmitOrderActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +50,7 @@ public class MainActivity extends Activity {
 
     public static Map<String, String> SEAT_TYPE_MAP;
     public static Map<String, String> TICKET_TYPE;
+    public static String CAN_BUY_DATE = "";
 
 
     public static final int WHAT_GET_RANDOM_CODE = 1;
@@ -83,6 +82,7 @@ public class MainActivity extends Activity {
         core = new ClientCore();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         PASSENGERS_MAP = new HashMap<String, Integer>();
+        CAN_BUY_DATE = loadCanBuyDate();
         initView();
         handler = new Handler() {
             @Override
@@ -144,6 +144,90 @@ public class MainActivity extends Activity {
             }
         };*/
 
+    }
+
+
+    public String loadCanBuyDate() {
+        String result = "";
+        StringBuffer sb = new StringBuffer();
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1;
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int week = c.get(Calendar.DAY_OF_WEEK) - 1;
+        sb.append(year + "年" + (month < 10 ? "0" + month : month) +  "月" + day + "日" + "(" + weekDays[week] + ")" + ",");
+
+        Log.v(TAG, "DATE" + result);
+        Log.v(TAG, "max day of month" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        for (int i = 0 ; i < 19; i++){
+            int dayCountOfMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+            if (day >= dayCountOfMonth){
+                month++;
+                day = 1;
+                c = setNewCalendar(year, month, day);
+                week = c.get(Calendar.DAY_OF_WEEK) - 1;
+
+
+            } else{
+                day++;
+                c = setNewCalendar(year, month - 1, day);
+                week = c.get(Calendar.DAY_OF_WEEK) - 1;
+            }
+
+            sb.append(year + "年" + (month < 10 ? "0" + month : month) + "月" + day + "日" + "(" + weekDays[week] + ")" + ",");
+        }
+        result = sb.toString();
+        Log.v(TAG, result);
+        return result;
+
+
+    }
+
+    public Calendar setNewCalendar(int year, int month, int day) {
+        Calendar c = Calendar.getInstance();
+
+        switch (month){
+            case Calendar.JANUARY :
+                c.set(year, Calendar.JANUARY,day);
+                break;
+            case Calendar.FEBRUARY :
+                c.set(year, Calendar.FEBRUARY,day);
+                break;
+            case Calendar.APRIL :
+                c.set(year, Calendar.APRIL,day);
+                break;
+            case Calendar.MARCH :
+                c.set(year, Calendar.MARCH,day);
+                break;
+            case Calendar.MAY :
+                c.set(year, Calendar.MAY,day);
+                break;
+            case Calendar.JUNE :
+                c.set(year, Calendar.JUNE,day);
+                break;
+            case Calendar.JULY :
+                c.set(year, Calendar.JULY,day);
+                break;
+            case Calendar.AUGUST :
+                c.set(year, Calendar.AUGUST,day);
+                break;
+            case Calendar.SEPTEMBER :
+                c.set(year, Calendar.SEPTEMBER,day);
+                break;
+            case Calendar.OCTOBER :
+                c.set(year, Calendar.OCTOBER,day);
+                break;
+            case Calendar.NOVEMBER :
+                c.set(year, Calendar.NOVEMBER,day);
+                break;
+            case Calendar.DECEMBER :
+                c.set(year, Calendar.DECEMBER,day);
+                break;
+
+        }
+
+        return c;
     }
 
     public void initView() {
@@ -250,6 +334,11 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             Log.v(TAG, "finally ok!!");
+            if (success){
+                Intent intent = new Intent(MainActivity.this, QueryActivity.class);
+                MainActivity.this.startActivity(intent);
+            //    MainActivity.this.finish();
+            }
 
         }
 
@@ -310,8 +399,6 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.bt_main_dialog_ok:
-                        Intent intent = new Intent(MainActivity.this, QueryActivity.class);
-                        context.startActivity(intent);
                         pd.show();
                         toLogin = true;
                         imm.hideSoftInputFromWindow(et_randomCode.getWindowToken(),0);
@@ -372,8 +459,7 @@ public class MainActivity extends Activity {
 
                         break;
                     case RETURN_LOGIN_SUCCESS:
-                        Intent intent = new Intent(MainActivity.this, QueryActivity.class);
-                        MainActivity.this.startActivity(intent);
+                        success = true;
                         break;
                 }
             }

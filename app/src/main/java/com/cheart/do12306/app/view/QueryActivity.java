@@ -10,10 +10,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
 import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.task.QueryTicketTask;
@@ -23,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,45 +37,64 @@ public class QueryActivity extends Activity {
 
     private static final String TAG = "QueryActivity";
     public static Map<String, String> stationsMap;
-    private EditText et_from;
-    private EditText et_to;
+    private AutoCompleteTextView aet_from;
+    private AutoCompleteTextView aet_to;
+    private ProgressDialog pd;
     private Spinner sp_date;
     private Button bt_submit;
+    public static String[] STATION_ARRAY = null;
+    public static String SELECTED_DATE = "";
 
     public static List<Map<String, String>> QUERY_RESULT_LIST = null;
+    public static String CAN_BY_DATE = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query);
+        pd = new ProgressDialog(this);
+        pd.show();
         init();
         loadAllStation();
         Log.v(TAG, stationsMap + "");
-
+        pd.dismiss();
 
     }
 
     public void init() {
-
+        STATION_ARRAY = new String[]{};
         stationsMap = new HashMap<String, String>();
         QUERY_RESULT_LIST = new ArrayList<Map<String, String>>();
+        loadAllStation();
         initView();
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new QueryTicketTask(QueryActivity.this).execute(new String[]{
-                        stationsMap.get("哈尔滨"/*et_from.getText().toString()*/),
-                        stationsMap.get("北京"/*et_to.getText().toString()*/),
-                        "2014-05-12"/*et_date.getText().toString()*/
+                        stationsMap.get(aet_from.getText().toString()),
+                        stationsMap.get(aet_to.getText().toString()),
+                        parserDate(SELECTED_DATE)
                 });
 
 
             }
         });
 
-        LoadStationsTask loadStationsTask = new LoadStationsTask();
-        loadStationsTask.execute("");
 
+    }
+
+    public String parserDate(String str) {
+        String result = "";
+        String[] arr1 = str.split("年");
+        StringBuffer sb = new StringBuffer();
+        sb.append(arr1[0] + "-");
+        String[] arr2 = arr1[1].split("月");
+        sb.append(arr2[0] + "-");
+        String[] arr3 = arr2[1].split("日");
+        sb.append(arr3[0]);
+        result = sb.toString();
+        Log.v(TAG , sb.toString());
+        return result;
     }
 
     public void loadAllStation() {
@@ -78,9 +102,11 @@ public class QueryActivity extends Activity {
         AssetManager am = getAssets();
         InputStream in = null;
         BufferedReader br = null;
+        StringBuffer sb_name = null;
         try {
             in = am.open("stations");
             br = new BufferedReader(new InputStreamReader(in));
+            sb_name = new StringBuffer();
             String stationsStr = br.readLine();
             String[] stationsArray = stationsStr.split("@");
 
@@ -97,23 +123,55 @@ public class QueryActivity extends Activity {
                             code = stationArray[2];
                         }
                     }
+                    sb_name.append(chineseName + ",");
                     stationsMap.put(chineseName, code);
 
                 } else {
 
                 }
             }
+
+            STATION_ARRAY = sb_name.toString().split(",");
+            Log.v(TAG, "STATION_ARRAY" + STATION_ARRAY);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
+
     public void initView() {
-        et_from = (EditText) findViewById(R.id.et_query_from);
-        et_to = (EditText) findViewById(R.id.et_query_to);
+        aet_from = (AutoCompleteTextView) findViewById(R.id.et_query_from);
+        aet_to = (AutoCompleteTextView) findViewById(R.id.et_query_to);
         sp_date = (Spinner) findViewById(R.id.sp_query_date);
+        sp_date.setAdapter(new ArrayAdapter<String>(
+                QueryActivity.this,
+                android.R.layout.simple_expandable_list_item_1,
+                MainActivity.CAN_BUY_DATE.split(",")
+        ));
+        sp_date.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                SELECTED_DATE = MainActivity.CAN_BUY_DATE.split(",")[i];
+                Log.v(TAG, "SELECTED_DATE" + SELECTED_DATE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         bt_submit = (Button) findViewById(R.id.bt_query_submit);
+        aet_from.setAdapter(new ArrayAdapter<String>(
+                QueryActivity.this,
+                android.R.layout.simple_dropdown_item_1line,
+                STATION_ARRAY
+        ));
+        aet_to.setAdapter(new ArrayAdapter<String>(
+                QueryActivity.this,
+                android.R.layout.simple_dropdown_item_1line,
+                STATION_ARRAY
+        ));
     }
 
     class LoadStationsTask extends AsyncTask<String, Integer, String> {
