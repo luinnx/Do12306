@@ -8,4 +8,7 @@
     <color name="main_bg">#edf1f4</color>
     <color name="main_et_bg">#ffffff</color>
     <color name="main_text_et_hint">#afafaf</color>
+
+    <color name="query_result_y">#ff67d177</color>
+    <color name="query_result_w">#ff9d171b</color>
 </resources>
