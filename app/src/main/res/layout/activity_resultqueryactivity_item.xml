@@ -7,14 +7,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dip"
         android:orientation="horizontal">
 
         <LinearLayout
 
             android:layout_width="match_parent"
-            android:layout_height="80dip"
-            android:layout_weight="3.4">
+            android:layout_height="match_parent"
+            android:layout_weight="3.9">
 
             <TextView
                 android:id="@+id/tv_resultQuery_train_class"
@@ -24,10 +24,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="2.6"
+            android:layout_weight="3.3"
             android:layout_width="match_parent"
-            android:layout_height="80dip"
-            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
             android:orientation="vertical"
 
             >
@@ -36,16 +36,14 @@
                 android:id="@+id/tv_resultQuery_stationTrainCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="K10202"
                 android:textColor="#aaaaaa"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tv_resultQuery_train_class_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="K10202"
                 android:textColor="#aaaaaa"
                 android:textSize="15sp" />
@@ -60,43 +58,58 @@
             android:orientation="vertical">
 
             <LinearLayout
+
+                android:gravity="left"
                 android:layout_width="match_parent"
-                android:layout_height="80dip"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingLeft="10dip">
+                >
 
 
                 <LinearLayout
+                    android:layout_gravity="left"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.2"
+                    android:layout_weight="0.8"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="历时:"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        </LinearLayout>
 
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-
+                        <TextView
+                            android:textColor="#ff4ba9a2"
+                            android:layout_weight="1.3"
+                            android:gravity="left|center_vertical"
+                            android:id="@+id/tv_resultQuery_startTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="19sp"
+                            android:text="12:20" />
 
                         <TextView
+                            android:textColor="#ff4ba9a2"
                             android:layout_weight="1"
-                            android:textSize="15sp"
-                            android:gravity="left|center_vertical"
+                            android:textSize="19sp"
+                            android:gravity="right|center_vertical"
                             android:id="@+id/tv_resultQuery_startStationName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="乌鲁木齐" />
-                        <TextView
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:id="@+id/tv_resultQuery_startTime"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="12:20" />
+
 
                     </LinearLayout>
 
@@ -104,21 +117,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:textSize="15sp"
-                            android:layout_weight="1"
-                            android:id="@+id/tv_resultQuery_endStationName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="北京北" />
+
                         <TextView
                             android:layout_weight="1"
                             android:id="@+id/tv_resultQuery_arriveTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
-                            android:gravity="right|center_vertical"
+                            android:gravity="left|center_vertical"
                             android:text="12:20" />
+                        <TextView
+                            android:gravity="right|center_vertical"
+                            android:textSize="15sp"
+                            android:layout_weight="1"
+                            android:id="@+id/tv_resultQuery_endStationName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="北京北" />
 
                     </LinearLayout>
 
@@ -129,93 +144,74 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.9">
+                    android:layout_weight="1.2">
                     <LinearLayout
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:orientation="vertical"
                         android:id="@+id/ll_resultQuery_gc"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:visibility="gone"
+                            android:paddingLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:id="@+id/ll_resultQuery_yz"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="match_parent">
 
 
 
                             <TextView
-                                android:id="@+id/tv_resultQuery_yzNum"
-                                android:gravity="center"
-                                android:text="有"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:visibility="visible"
+                                android:textColor="#ff3f7e3f"
+                                android:layout_marginBottom="3dp"
+                                android:id="@+id/tv_resultQuery_t0"
+                                android:text=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
                             <TextView
-                                android:id="@+id/tv_resultQuery_yzPrice"
+                                android:visibility="gone"
+                                android:textColor="#ff3f7e3f"
+                                android:layout_gravity="left"
+                                android:layout_marginBottom="3dp"
+                                android:id="@+id/tv_resultQuery_t1"
                                 android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:text=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:visibility="gone"
+                                android:textColor="#ff3f7e3f"
+                                android:layout_gravity="left"
+                                android:layout_marginBottom="3dp"
+                                android:id="@+id/tv_resultQuery_t2"
+                                android:gravity="center"
+                                android:text=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:visibility="gone"
+                                android:textColor="#ff3f7e3f"
+                                android:layout_gravity="left"
+                                android:id="@+id/tv_resultQuery_t3"
+                                android:gravity="center"
+                                android:text=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:visibility="gone"
-                            android:id="@+id/ll_resultQuery_rz"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
 
 
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_rzNum"
-                                android:gravity="center"
-                                android:text="有"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                            <TextView
-                                android:id="@+id/tv_resultQuery_rzPrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:visibility="gone"
-                            android:id="@+id/ll_resultQuery_gr"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
 
 
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_grNum"
-                                android:gravity="center"
-                                android:text="有"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                            <TextView
-                                android:id="@+id/tv_resultQuery_grPrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:visibility="gone"
                             android:id="@+id/ll_resultQuery_yw"
                             android:layout_width="match_parent"
@@ -231,13 +227,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_ywPrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+
 
                         </LinearLayout>
 
@@ -257,13 +247,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_rwPrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+
 
                         </LinearLayout>
 
@@ -283,13 +267,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_zyPrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+
 
                         </LinearLayout>
 
@@ -309,13 +287,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_zePrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+
 
                         </LinearLayout>
 
@@ -335,13 +307,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_tdPrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+
 
                         </LinearLayout>
 
@@ -361,19 +327,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
-                            <TextView
-                                android:id="@+id/tv_resultQuery_swzPrice"
-                                android:gravity="center"
-                                android:text="￥233"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
 
-                        </LinearLayout>
+
+                        </LinearLayout>-->
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+
 
                 <!--<LinearLayout
                     android:layout_width="match_parent"

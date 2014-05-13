@@ -52,6 +52,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     public static final String ZE_NUM = "ze_num";
     public static final String TD_NUM = "td_num";
     public static final String SWZ_NUM = "swz_num";
+    public static final String TICKET_NUM = "ticket_num";
     public static final String WP_NUM = "wp_num";
     public static final String DC_NUM = "dc_num";
     public static final String TRAIN_CLASS = "train_class_name";
@@ -136,24 +137,52 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
 
         for (Iterator<BaseData> it = baseQueryResults.iterator(); it.hasNext();){
             BaseData b = it.next();
+            StringBuffer sb = new StringBuffer();
             baseDatas.add(b);
             BaseQueryLeft bql = b.getQueryLeftNewDTO();
             Map<String, String> m = new HashMap<String, String>();
+
+            if (!bql.getYz_num().equals("--")){
+                sb.append("硬座" + ">" + bql.getYz_num() + ",");
+            }
+            if (!bql.getRz_num().equals("--")){
+                sb.append("软座" + ">" + bql.getRz_num() + ",");
+            }
+            if (!bql.getYw_num().equals("--")){
+                sb.append("硬卧" + ">" + bql.getYw_num() + ",");
+            }
+
+            if (!bql.getRw_num().equals("--")){
+                sb.append("软卧" + ">" + bql.getRw_num() + ",");
+            }
+
+            if (!bql.getGr_num().equals("--")){
+                sb.append("高级软卧" + ">" + bql.getGr_num() + ",");
+            }
+
+            if (!bql.getZy_num().equals("--")){
+                sb.append("一等座" + ">" + bql.getZy_num() + ",");
+            }
+
+            if (!bql.getZe_num().equals("--")){
+                sb.append("二等座" + ">" + bql.getZe_num() + ",");
+            }
+
+            if (!bql.getTz_num().equals("--")){
+                sb.append("特等座" + ">" + bql.getTz_num() + ",");
+            }
+
+            if (!bql.getSwz_num().equals("--")){
+                sb.append("商务座" + ">" + bql.getSwz_num() + ",");
+            }
+
+            m.put(TICKET_NUM, sb.toString());
             m.put(STATION_TRAIN_CODE, bql.getStation_train_code());
             m.put(START_TIME, bql.getStart_time());
             m.put(ARRIVE_TIME, bql.getArrive_time());
             m.put(START_STATION_NAME, bql.getStart_station_name());
             m.put(END_STATION_NAME, bql.getEnd_station_name());
-            m.put(YZ_NUM, bql.getYz_num());
-            m.put(RZ_NUM, bql.getRz_num());
-            m.put(YW_NUM, bql.getYw_num());
-            m.put(RW_NUM, bql.getRw_num());
-            m.put(GR_NUM, bql.getGr_num());
-            m.put(ZY_NUM, bql.getZy_num());
-            m.put(ZE_NUM, bql.getZe_num());
-            m.put(TD_NUM, bql.getTz_num());
-            m.put(SWZ_NUM, bql.getSwz_num());
-            m.put(WP_NUM, bql.getYw_num());
+
             m.put(TRAIN_CLASS, bql.getTrain_class_name());
             m.put(TRAIN_CLASS_NAME, bql.getTrain_class_name());
             Log.v(TAG, m.size() + "ms");

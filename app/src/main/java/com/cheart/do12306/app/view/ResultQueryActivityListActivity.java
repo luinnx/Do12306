@@ -46,8 +46,7 @@ public class ResultQueryActivityListActivity extends FragmentActivity
             R.id.tv_resultQuery_stationTrainCode,
             R.id.tv_resultQuery_startTime,
             R.id.tv_resultQuery_arriveTime,
-            R.id.tv_resultQuery_yzNum,
-            R.id.tv_resultQuery_rzNum,
+
 
 
 
