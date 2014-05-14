@@ -1,6 +1,8 @@
 package com.cheart.do12306.app.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,19 +12,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
+import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
-import com.cheart.do12306.app.task.SubmitOrderTask;
+import com.cheart.do12306.app.util.StringHelper;
 
-import org.w3c.dom.Text;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ShowTicketDetail extends ActionBarActivity {
 
     private static final String TAG = "ShowTicketDetail";
+    public static final String TICKET_PRICE = "https://kyfw.12306.cn/otn/leftTicket/queryTicketPrice";
+    public static final String QUERY_PASS_BY = "https://kyfw.12306.cn/otn/czxx/queryByTrainNo";
+    public static final String TEST = "https://kyfw.12306.cn/otn/leftTicket/queryTicketPrice?train_no=03000K145200&from_station_no=07&to_station_no=08&seat_types=1413&train_date=2014-05-16";
 
-    private Button bt_submit;
-    private BaseQueryLeft ticketInfo;
+
+    private BaseQueryLeft TICKET_INFO;
     public static String CAN_TICKET_TYPE;
 
     public static BaseData SUBMIT_BASEDATA;
@@ -41,6 +50,7 @@ public class ShowTicketDetail extends ActionBarActivity {
     private TextView tv_ztNum;
     private TextView tv_swzNum;
     private TextView tv_wzNum;
+    private Button bt_submit;
 
 
     @Override
@@ -48,9 +58,9 @@ public class ShowTicketDetail extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_ticket_detail);
         Intent intent = getIntent();
-        ticketInfo = (BaseQueryLeft) intent.getSerializableExtra("ticket_info");
+        TICKET_INFO = (BaseQueryLeft) intent.getSerializableExtra("ticket_info");
         SUBMIT_BASEDATA = (BaseData) intent.getSerializableExtra("ticket_info_baseData");
-        Log.v(TAG, ticketInfo.getStation_train_code());
+        Log.v(TAG, TICKET_INFO.getStation_train_code());
         init();
 
 
@@ -83,12 +93,13 @@ public class ShowTicketDetail extends ActionBarActivity {
 
     public void init() {
         initView();
+        new ShowTicketDetailTask(ShowTicketDetail.this).execute("");
 
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ShowTicketDetail.this, SubmitOrderActivity.class);
-                intent.putExtra("ticket_info", ticketInfo);
+                intent.putExtra("ticket_info", TICKET_INFO);
                 startActivity(intent);
                 //new SubmitOrderTask(ShowTicketDetail.this).execute();
             }
@@ -96,40 +107,8 @@ public class ShowTicketDetail extends ActionBarActivity {
     }
 
     public void initView() {
-        bt_submit = (Button) findViewById(R.id.bt_showTicketDetail_submit);
-        tv_stationTrainCode = (TextView) findViewById(R.id.tv_showTicketDetail_stationTrainCode);
-        tv_startTime = (TextView) findViewById(R.id.tv_showTicketDetail_startTime);
-        tv_arriveTime = (TextView) findViewById(R.id.tv_showTicketDetail_arriveTime);
-        tv_lishi = (TextView) findViewById(R.id.tv_showTicketDetail_lishi);
-        tv_wzNum = (TextView) findViewById(R.id.tv_showTicketDetail_wzNum);
-        tv_yzNum = (TextView) findViewById(R.id.tv_showTicketDetail_yzNum);
-        tv_rzNum = (TextView) findViewById(R.id.tv_showTicketDetail_rzNum);
-        tv_ywNum = (TextView) findViewById(R.id.tv_showTicketDetail_ywNum);
-        tv_rwNum = (TextView) findViewById(R.id.tv_showTicketDetail_rwNum);
-        tv_gwNum = (TextView) findViewById(R.id.tv_showTicketDetail_gwNum);
-        tv_zyNum = (TextView) findViewById(R.id.tv_showTicketDetail_zyNum);
-        tv_zeNum = (TextView) findViewById(R.id.tv_showTicketDetail_zeNum);
-        tv_ztNum = (TextView) findViewById(R.id.tv_showTicketDetail_ztNum);
-        tv_swzNum = (TextView) findViewById(R.id.tv_showTicketDetail_swzNum);
 
-        tv_stationTrainCode.setText(ticketInfo.getStation_train_code());
-        tv_lishi.setText("历时" + ticketInfo.getLishi());
-        tv_startTime.setText("(" + ticketInfo.getFrom_station_name() + ")" +
-                ticketInfo.getStart_time());
-        tv_arriveTime.setText(ticketInfo.getArrive_time() +
-                        "(" + ticketInfo.getTo_station_name() + ")"
-        );
-        tv_wzNum.setText(ticketInfo.getWz_num());
-        tv_yzNum.setText(ticketInfo.getYz_num());
-        tv_rzNum.setText(ticketInfo.getRz_num());
-        tv_ywNum.setText(ticketInfo.getYw_num());
-        tv_rwNum.setText(ticketInfo.getRw_num());
-        tv_gwNum.setText(ticketInfo.getGg_num());
-        tv_zyNum.setText(ticketInfo.getZy_num());
-        tv_zeNum.setText(ticketInfo.getZe_num());
-        tv_ztNum.setText(ticketInfo.getTz_num());
-        tv_swzNum.setText(ticketInfo.getSwz_num());
-
+        bt_submit = (Button) findViewById(R.id.lv_showTicketDetail_submit);
 
     }
 
@@ -150,5 +129,91 @@ public class ShowTicketDetail extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ShowTicketDetailTask extends AsyncTask<String, Integer, String>{
+        String urlTicketPrice = "";
+        String urlQueryPassBy = "";
+        private Context context;
+
+        private ShowTicketDetailTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            init();
+        }
+
+        protected void init(){
+            initView();
+           // initURL();
+        }
+        protected String initURL(String URL,Map<String, String> params){
+            String result = "";
+            StringBuffer sb = new StringBuffer();
+            String[] paramsKey = (String[]) params.keySet().toArray();
+            for (String str : paramsKey){
+                sb.append(str + "=" + params.get(str) + "&");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            result = sb.toString();
+
+            return result;
+
+
+        }
+        protected void initView(){
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            new Thread(new NetThreadTicketDetail()).start();
+            return null;
+        }
+
+        private class NetThreadTicketDetail implements Runnable{
+
+            @Override
+            public void run() {
+                Map<String,String> paramsTicketPrice = new HashMap<String, String>();
+                paramsTicketPrice.put("train_no", TICKET_INFO.getTrain_no());
+                paramsTicketPrice.put("from_station_no", TICKET_INFO.getFrom_station_no());
+                paramsTicketPrice.put("to_station_no", TICKET_INFO.getTo_station_no());
+                paramsTicketPrice.put("seat_types",TICKET_INFO.getSeat_types());
+                paramsTicketPrice.put("train_date", QueryActivity.SELECT_DATE_PARSERED);
+                String resultTicketPrice = MainActivity.core.getRequest(
+                        context,
+                        StringHelper.parserGetUrl(TICKET_PRICE,paramsTicketPrice),
+                        null,
+                        HttpsHeader.tiketSearch(),
+                        null,
+                        false
+                );
+
+                Log.v(TAG, "resultTicketPrice" + resultTicketPrice);
+                Map<String,String> paramsQueryPassBy = new HashMap<String, String>();
+                paramsQueryPassBy.put("train_no", TICKET_INFO.getTrain_no());
+                paramsQueryPassBy.put("from_station_telecode", TICKET_INFO.getStation_train_code());
+                paramsQueryPassBy.put("depart_date", QueryActivity.SELECT_DATE_PARSERED);
+                String resultQueRPassBy = MainActivity.core.getRequest(
+                        context,
+                        StringHelper.parserGetUrl(TICKET_PRICE,paramsQueryPassBy),
+                        null,
+                        HttpsHeader.tiketSearch(),
+                        null,
+                        false
+                );
+                Log.v(TAG, "resultQueryPassBy" + resultQueRPassBy);
+
+            }
+        }
     }
 }

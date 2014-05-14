@@ -329,6 +329,7 @@
             android:layout_height="match_parent">
 
             <Button
+                android:id="@+id/lv_showTicketDetail_submit"
                 android:background="#ff9d171b"
                 android:textColor="#ffffffff"
                 android:text="购买"

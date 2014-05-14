@@ -44,6 +44,7 @@ public class QueryActivity extends Activity {
     private Button bt_submit;
     public static String[] STATION_ARRAY = null;
     public static String SELECTED_DATE = "";
+    public static String SELECT_DATE_PARSERED = "";
 
     public static List<Map<String, String>> QUERY_RESULT_LIST = null;
     public static String CAN_BY_DATE = "";
@@ -70,10 +71,11 @@ public class QueryActivity extends Activity {
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SELECT_DATE_PARSERED = parserDate(SELECTED_DATE);
                 new QueryTicketTask(QueryActivity.this).execute(new String[]{
                         stationsMap.get(aet_from.getText().toString()),
                         stationsMap.get(aet_to.getText().toString()),
-                        parserDate(SELECTED_DATE)
+                        SELECT_DATE_PARSERED
                 });
 
 
