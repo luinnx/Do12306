@@ -19,6 +19,7 @@
             android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/tv_showTicketDetail_stationTrainCode"
                 android:textColor="#ff9d171b"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -26,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/tv_showTicketDetail_date"
                 android:textColor="#ff000000"
                 android:gravity="center"
                 android:text="2014-05-13"
@@ -135,7 +137,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <LinearLayout
+                android:id="@+id/ll_show_tickket_detail_t0"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_weight="1"
@@ -143,44 +147,13 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/tv_showTicketDetail_t1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="软座:有"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:textColor="#ffa97633"
-                    android:layout_weight="1"
-                    android:id="@+id/tv_showTicketDetail_p1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="98元"
-                    android:textSize="20sp" />
-
-
-                </LinearLayout>
-
-
-
-
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
+                    android:textColor="@color/query_result_y"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_t0"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="硬座:有"
+                    android:text=""
                     android:textSize="20sp" />
 
                 <TextView
@@ -190,14 +163,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="231元"
+                    android:text=""
                     android:textSize="20sp" />
 
 
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/ll_show_tickket_detail_t1"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_weight="1"
@@ -205,12 +178,50 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:textColor="@color/query_result_y"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_showTicketDetail_t1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:textColor="#ffa97633"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_showTicketDetail_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="20sp" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_show_tickket_detail_t2"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textColor="@color/query_result_y"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_t2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="硬卧:有"
+                    android:text=""
                     android:textSize="20sp" />
 
                 <TextView
@@ -220,13 +231,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="231元"
+                    android:text=""
                     android:textSize="20sp" />
 
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_show_tickket_detail_t3"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_weight="1"
@@ -234,12 +246,13 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:textColor="@color/query_result_y"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_t3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="高级软卧:有"
+                    android:text=""
                     android:textSize="20sp" />
 
                 <TextView
@@ -249,7 +262,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="231元"
+                    android:text=""
                     android:textSize="20sp" />
 
 
@@ -323,6 +336,9 @@
             </LinearLayout>
 
         <LinearLayout
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1.7"
             android:gravity="center"
             android:layout_width="match_parent"

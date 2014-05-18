@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tv_showTicketDetail_pass_stationName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="1,哈尔滨"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tv_showTicketDetail_pass_arriveTimne"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="14:23"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_showTicketDetail_pass_startTime"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="20:13"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_showTicketDetail_pass_stopoverTime"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="23分钟"
+        android:textSize="16sp" />
+
+</LinearLayout>

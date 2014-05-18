@@ -34,6 +34,7 @@ public class ShowQueryResult extends Activity {
     public static List<BaseQueryLeft> TICKET_LIST;
     public static List<BaseData> TICKET_BASEDATA_LIST;
     public static Map<String, Integer> TICKET_MAP;
+    public static String TICKET_NUM;
     public static String DATE = "";
     private ListView list = null;
 
@@ -53,7 +54,7 @@ public class ShowQueryResult extends Activity {
     public void initView(){
         list = (ListView) findViewById(R.id.lv_showQueryResult);
         Log.v(TAG, "SET ADAPTER");
-        Log.v(TAG, QueryActivity.QUERY_RESULT_LIST.toString());
+//        Log.v(TAG, QueryActivity.QUERY_RESULT_LIST.toString());
         list.setAdapter(new ResultQueryAdapter(
                 this,
                 QueryActivity.QUERY_RESULT_LIST,
@@ -66,6 +67,10 @@ public class ShowQueryResult extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(ShowQueryResult.this, ShowTicketDetail.class);
+                Log.v(TAG, "TN" + QueryActivity.QUERY_RESULT_LIST.get(i).
+                        get("ticket_num"));
+                intent.putExtra("ticket_num",QueryActivity.QUERY_RESULT_LIST.get(i).
+                        get("ticket_num"));
                 intent.putExtra("ticket_info", ShowQueryResult.TICKET_LIST.get(i));
                 intent.putExtra("ticket_info_baseData", ShowQueryResult.TICKET_BASEDATA_LIST.get(i));
                 startActivity(intent);

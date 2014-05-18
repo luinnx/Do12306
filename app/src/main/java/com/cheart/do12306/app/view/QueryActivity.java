@@ -73,9 +73,9 @@ public class QueryActivity extends Activity {
             public void onClick(View view) {
                 SELECT_DATE_PARSERED = parserDate(SELECTED_DATE);
                 new QueryTicketTask(QueryActivity.this).execute(new String[]{
-                        stationsMap.get(aet_from.getText().toString()),
-                        stationsMap.get(aet_to.getText().toString()),
-                        SELECT_DATE_PARSERED
+                        stationsMap.get("哈尔滨"/*aet_from.getText().toString()*/),
+                        stationsMap.get("长春"/*aet_to.getText().toString()*/),
+                        "2014-05-18"/*SELECT_DATE_PARSERED*/
                 });
 
 

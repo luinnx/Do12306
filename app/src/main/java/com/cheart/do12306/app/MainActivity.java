@@ -34,10 +34,14 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends Activity {
+
+
+
     private static final String TAG = "MainActivity";
     public static ClientCore core = null;
     public static final String INDEX = "https://kyfw.12306.cn/otn/";
@@ -49,7 +53,9 @@ public class MainActivity extends Activity {
     public static Map<String, Integer> PASSENGERS_MAP = null;
 
     public static Map<String, String> SEAT_TYPE_MAP;
+    public static Map<String, String> SEAT_TYPE_CODE_MAP;
     public static Map<String, String> TICKET_TYPE;
+
     public static String CAN_BUY_DATE = "";
 
 
@@ -83,6 +89,7 @@ public class MainActivity extends Activity {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         PASSENGERS_MAP = new HashMap<String, Integer>();
         CAN_BUY_DATE = loadCanBuyDate();
+        SEAT_TYPE_CODE_MAP = new HashMap();
         initView();
         handler = new Handler() {
             @Override
@@ -105,7 +112,20 @@ public class MainActivity extends Activity {
         SEAT_TYPE_MAP.put("硬卧","3");
         SEAT_TYPE_MAP.put("软卧","4");
         SEAT_TYPE_MAP.put("高级软卧","6");
-        SEAT_TYPE_MAP.put("商务座","9");
+        SEAT_TYPE_MAP.put("商务座", "9");
+
+
+
+        SEAT_TYPE_CODE_MAP.put("二等座", "O");
+        SEAT_TYPE_CODE_MAP.put("一等座", "M");
+        SEAT_TYPE_CODE_MAP.put("特等座", "P");
+        SEAT_TYPE_CODE_MAP.put("硬座","A1");
+        SEAT_TYPE_CODE_MAP.put("软座","A2");
+        SEAT_TYPE_CODE_MAP.put("硬卧","A3");
+        SEAT_TYPE_CODE_MAP.put("软卧","A4");
+        SEAT_TYPE_CODE_MAP.put("高级软卧","A6");
+        SEAT_TYPE_CODE_MAP.put("商务座", "A9");
+
 
 
         TICKET_TYPE.put("成人", "1");
