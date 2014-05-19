@@ -2,24 +2,19 @@ package com.cheart.do12306.app.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
-import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.task.QueryTicketTask;
 
 import java.io.BufferedReader;
@@ -27,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +30,7 @@ public class QueryActivity extends Activity {
 
 
     private static final String TAG = "QueryActivity";
-    public static Map<String, String> stationsMap;
+    public static Map<String, String> STATION_MAP;
     private AutoCompleteTextView aet_from;
     private AutoCompleteTextView aet_to;
     private ProgressDialog pd;
@@ -57,14 +51,14 @@ public class QueryActivity extends Activity {
         pd.show();
         init();
         loadAllStation();
-        Log.v(TAG, stationsMap + "");
+        Log.v(TAG, STATION_MAP + "");
         pd.dismiss();
 
     }
 
     public void init() {
         STATION_ARRAY = new String[]{};
-        stationsMap = new HashMap<String, String>();
+        STATION_MAP = new HashMap<String, String>();
         QUERY_RESULT_LIST = new ArrayList<Map<String, String>>();
         loadAllStation();
         initView();
@@ -73,17 +67,17 @@ public class QueryActivity extends Activity {
             public void onClick(View view) {
                 SELECT_DATE_PARSERED = parserDate(SELECTED_DATE);
                 new QueryTicketTask(QueryActivity.this).execute(new String[]{
-                        stationsMap.get("哈尔滨"/*aet_from.getText().toString()*/),
-                        stationsMap.get("长春"/*aet_to.getText().toString()*/),
-                        "2014-05-18"/*SELECT_DATE_PARSERED*/
+                        STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
+                        STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                        "2014-05-23"/*SELECT_DATE_PARSERED*/
                 });
 
 
             }
         });
-
-
     }
+
+
 
     public String parserDate(String str) {
         String result = "";
@@ -126,7 +120,7 @@ public class QueryActivity extends Activity {
                         }
                     }
                     sb_name.append(chineseName + ",");
-                    stationsMap.put(chineseName, code);
+                    STATION_MAP.put(chineseName, code);
 
                 } else {
 
@@ -148,7 +142,7 @@ public class QueryActivity extends Activity {
         sp_date = (Spinner) findViewById(R.id.sp_query_date);
         sp_date.setAdapter(new ArrayAdapter<String>(
                 QueryActivity.this,
-                android.R.layout.simple_expandable_list_item_1,
+                R.layout.activity_query_date_item,
                 MainActivity.CAN_BUY_DATE.split(",")
         ));
         sp_date.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -220,7 +214,7 @@ public class QueryActivity extends Activity {
                                 code = stationArray[2];
                             }
                         }
-                        stationsMap.put(chineseName, code);
+                        STATION_MAP.put(chineseName, code);
 
                     } else {
 

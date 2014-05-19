@@ -53,7 +53,7 @@
 
                 <TextView
                     android:textColor="#ffffff"
-                    android:id="@+id/tv_showTicketDetail_startStationName"
+                    android:id="@+id/tv_showTicketDetail_fromStationName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -104,7 +104,7 @@
 
                 <TextView
                     android:textColor="#ffffff"
-                    android:id="@+id/tv_showTicketDetail_endStationName"
+                    android:id="@+id/tv_showTicketDetail_toStationName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

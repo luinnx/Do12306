@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
+import com.cheart.do12306.app.util.DateHelper;
 import com.cheart.do12306.app.view.QueryActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -176,26 +177,26 @@ public class MainActivity extends Activity {
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
         int week = c.get(Calendar.DAY_OF_WEEK) - 1;
-        sb.append(year + "年" + (month < 10 ? "0" + month : month) +  "月" + day + "日" + "(" + weekDays[week] + ")" + ",");
+        sb.append(year + "年" + (month < 10 ? "0" + month : month) + "月" + (day < 10 ? "0" + day : day) + "日" + "(" +
+                weekDays[week] + ")" + ",");
 
-        Log.v(TAG, "DATE" + result);
-        Log.v(TAG, "max day of month" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
         for (int i = 0 ; i < 19; i++){
             int dayCountOfMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
             if (day >= dayCountOfMonth){
                 month++;
                 day = 1;
-                c = setNewCalendar(year, month, day);
+                c = DateHelper.setNewCalendar(year, month, day);
                 week = c.get(Calendar.DAY_OF_WEEK) - 1;
 
 
             } else{
                 day++;
-                c = setNewCalendar(year, month - 1, day);
+                c = DateHelper.setNewCalendar(year, month - 1, day);
                 week = c.get(Calendar.DAY_OF_WEEK) - 1;
             }
 
-            sb.append(year + "年" + (month < 10 ? "0" + month : month) + "月" + day + "日" + "(" + weekDays[week] + ")" + ",");
+            sb.append(year + "年" + (month < 10 ? "0" + month : month) + "月" + (day < 10 ? "0" + day : day) + "日" + "(" +
+                    weekDays[week] + ")" + ",");
         }
         result = sb.toString();
         Log.v(TAG, result);
@@ -204,51 +205,6 @@ public class MainActivity extends Activity {
 
     }
 
-    public Calendar setNewCalendar(int year, int month, int day) {
-        Calendar c = Calendar.getInstance();
-
-        switch (month){
-            case Calendar.JANUARY :
-                c.set(year, Calendar.JANUARY,day);
-                break;
-            case Calendar.FEBRUARY :
-                c.set(year, Calendar.FEBRUARY,day);
-                break;
-            case Calendar.APRIL :
-                c.set(year, Calendar.APRIL,day);
-                break;
-            case Calendar.MARCH :
-                c.set(year, Calendar.MARCH,day);
-                break;
-            case Calendar.MAY :
-                c.set(year, Calendar.MAY,day);
-                break;
-            case Calendar.JUNE :
-                c.set(year, Calendar.JUNE,day);
-                break;
-            case Calendar.JULY :
-                c.set(year, Calendar.JULY,day);
-                break;
-            case Calendar.AUGUST :
-                c.set(year, Calendar.AUGUST,day);
-                break;
-            case Calendar.SEPTEMBER :
-                c.set(year, Calendar.SEPTEMBER,day);
-                break;
-            case Calendar.OCTOBER :
-                c.set(year, Calendar.OCTOBER,day);
-                break;
-            case Calendar.NOVEMBER :
-                c.set(year, Calendar.NOVEMBER,day);
-                break;
-            case Calendar.DECEMBER :
-                c.set(year, Calendar.DECEMBER,day);
-                break;
-
-        }
-
-        return c;
-    }
 
     public void initView() {
         li = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

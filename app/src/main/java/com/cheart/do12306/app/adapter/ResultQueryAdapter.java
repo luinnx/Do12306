@@ -1,24 +1,17 @@
 package com.cheart.do12306.app.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.cheart.do12306.app.R;
-import com.cheart.do12306.app.domain.ResultQueryListItem;
 import com.cheart.do12306.app.task.QueryTicketTask;
 
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.logging.Handler;
-
-import static com.cheart.do12306.app.R.drawable.bg_ll_result_query_train_class_k;
 
 /**
  * Created by cheart on 4/26/2014.
@@ -74,10 +67,10 @@ public class ResultQueryAdapter extends SimpleAdapter {
                     tv_resultQuery_startTime);
             holder.tv_arriveTime = (TextView) convertView.findViewById(R.id.
                     tv_resultQuery_arriveTime);
-            holder.tv_startStationName = (TextView) convertView.findViewById(R.id.
-                    tv_resultQuery_startStationName);
-            holder.tv_endStationName = (TextView) convertView.findViewById(R.id.
-                    tv_resultQuery_endStationName);
+            holder.tv_fromStationName = (TextView) convertView.findViewById(R.id.
+                    tv_resultQuery_fromStationName);
+            holder.tv_toStationName = (TextView) convertView.findViewById(R.id.
+                    tv_resultQuery_toStationName);
 
             holder.tv_train_class_name = (TextView) convertView.findViewById(R.id.
                     tv_resultQuery_train_class_name);
@@ -101,8 +94,8 @@ public class ResultQueryAdapter extends SimpleAdapter {
         holder.tv_stationTrainCode.setText(data.get(position).get(QueryTicketTask.STATION_TRAIN_CODE));
         holder.tv_startTime.setText(data.get(position).get(QueryTicketTask.START_TIME));
         holder.tv_arriveTime.setText(data.get(position).get(QueryTicketTask.ARRIVE_TIME));
-        holder.tv_startStationName.setText(data.get(position).get(QueryTicketTask.START_STATION_NAME));
-        holder.tv_endStationName.setText(data.get(position).get(QueryTicketTask.END_STATION_NAME));
+        holder.tv_fromStationName.setText(data.get(position).get(QueryTicketTask.FROM_STATION_NAME));
+        holder.tv_toStationName.setText(data.get(position).get(QueryTicketTask.TO_STATION_NAME));
 
         String[] arr1 = data.get(position).get(QueryTicketTask.TICKET_NUM).split(",");
         for (int i = 0; i < arr1.length; i++) {
@@ -155,8 +148,8 @@ public class ResultQueryAdapter extends SimpleAdapter {
     }
 
     public class ViewHolder {
-        private TextView tv_startStationName;
-        private TextView tv_endStationName;
+        private TextView tv_fromStationName;
+        private TextView tv_toStationName;
         private TextView tv_stationTrainCode;
         private TextView tv_startTime;
         private TextView tv_arriveTime;

@@ -1,5 +1,6 @@
 package com.cheart.do12306.app.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -51,8 +52,8 @@ public class ShowTicketDetail extends ActionBarActivity {
     public static String PRICE_STRING;
     public static String TICKET_NUM_PRICE_STRING;
     private boolean success = false;
-    private TextView tv_startStationName;
-    private TextView tv_endStationName;
+    private TextView tv_fromStationName;
+    private TextView tv_toStationName;
     private TextView tv_stationTrainCode;
     private TextView tv_date;
     private TextView tv_startTime;
@@ -78,12 +79,14 @@ public class ShowTicketDetail extends ActionBarActivity {
     private TextView tv_p1;
     private TextView tv_p2;
     private TextView tv_p3;
+    private ProgressDialog pd;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_ticket_detail);
+        pd = new ProgressDialog(this);
         PASS_STATION_LIST = new ArrayList<PassStation>();
         PRICE_STRING = "";
         Intent intent = getIntent();
@@ -100,27 +103,36 @@ public class ShowTicketDetail extends ActionBarActivity {
         StringBuffer sb = new StringBuffer();
         if (!baseQueryLeft.getYz_num().equals("无") && !baseQueryLeft.getYz_num().equals("--")) {
             sb.append("硬座" + ",");
-        } else if (!baseQueryLeft.getRz_num().equals("无") && !baseQueryLeft.getRz_num().equals("--")) {
+        } else if (!baseQueryLeft.getRz_num().equals("无") && !baseQueryLeft.getRz_num().
+                equals("--")) {
             sb.append("软座" + ",");
-        } else if (!baseQueryLeft.getYw_num().equals("无") && !baseQueryLeft.getYw_num().equals("--")) {
+        } else if (!baseQueryLeft.getYw_num().equals("无") && !baseQueryLeft.getYw_num().
+                equals("--")) {
             sb.append("硬卧" + ",");
-        } else if (!baseQueryLeft.getRw_num().equals("无") && !baseQueryLeft.getRw_num().equals("--")) {
+        } else if (!baseQueryLeft.getRw_num().equals("无") && !baseQueryLeft.getRw_num().
+                equals("--")) {
             sb.append("软卧" + ",");
-        } else if (!baseQueryLeft.getGr_num().equals("无") && !baseQueryLeft.getGr_num().equals("--")) {
+        } else if (!baseQueryLeft.getGr_num().equals("无") && !baseQueryLeft.getGr_num().
+                equals("--")) {
             sb.append("高级软卧" + ",");
-        } else if (!baseQueryLeft.getZy_num().equals("无") && !baseQueryLeft.getZy_num().equals("--")) {
+        } else if (!baseQueryLeft.getZy_num().equals("无") && !baseQueryLeft.getZy_num().
+                equals("--")) {
             sb.append("一等座" + ",");
-        } else if (!baseQueryLeft.getZe_num().equals("无") && !baseQueryLeft.getZe_num().equals("--")) {
+        } else if (!baseQueryLeft.getZe_num().equals("无") && !baseQueryLeft.getZe_num().
+                equals("--")) {
             sb.append("二等座" + ",");
-        } else if (!baseQueryLeft.getTz_num().equals("无") && !baseQueryLeft.getTz_num().equals("--")) {
+        } else if (!baseQueryLeft.getTz_num().equals("无") && !baseQueryLeft.getTz_num().
+                equals("--")) {
             sb.append("特等座" + ",");
-        } else if (!baseQueryLeft.getSwz_num().equals("无") && !baseQueryLeft.getSwz_num().equals("--")) {
+        } else if (!baseQueryLeft.getSwz_num().equals("无") && !baseQueryLeft.getSwz_num().
+                equals("--")) {
             sb.append("商务座" + ",");
         }
         CAN_TICKET_TYPE = sb.toString();
     }
 
     public void init() {
+        pd.show();
         initView();
         new ShowTicketDetailTask(ShowTicketDetail.this).execute("");
 
@@ -146,22 +158,21 @@ public class ShowTicketDetail extends ActionBarActivity {
         tv_p3 = (TextView) findViewById(R.id.tv_showTicketDetail_p3);
         bt_submit = (Button) findViewById(R.id.lv_showTicketDetail_submit);
         lv_pass = (ListView) findViewById(R.id.lv_showTicketDetail_pass);
-        tv_startStationName = (TextView) findViewById(R.id.tv_showTicketDetail_startStationName);
-        tv_endStationName = (TextView) findViewById(R.id.tv_showTicketDetail_endStationName);
+        tv_fromStationName = (TextView) findViewById(R.id.tv_showTicketDetail_fromStationName);
+        tv_toStationName = (TextView) findViewById(R.id.tv_showTicketDetail_toStationName);
         tv_startTime = (TextView) findViewById(R.id.tv_showTicketDetail_startTime);
         tv_arriveTime = (TextView) findViewById(R.id.tv_showTicketDetail_arriveTime);
         tv_lishi = (TextView) findViewById(R.id.tv_showTicketDetail_lishi);
         tv_stationTrainCode = (TextView) findViewById(R.id.tv_showTicketDetail_stationTrainCode);
         tv_date = (TextView) findViewById(R.id.tv_showTicketDetail_date);
-        tv_startStationName.setText(TICKET_INFO.getStart_station_name());
-        tv_endStationName.setText(TICKET_INFO.getEnd_station_name());
+        tv_fromStationName.setText(TICKET_INFO.getFrom_station_name());
+        tv_toStationName.setText(TICKET_INFO.getTo_station_name());
         tv_startTime.setText(TICKET_INFO.getStart_time());
         tv_arriveTime.setText(TICKET_INFO.getArrive_time());
-        tv_lishi.setText(TICKET_INFO.getLishi());
+        tv_lishi.setText( parserLishi(TICKET_INFO.getLishi()));
         tv_stationTrainCode.setText(TICKET_INFO.getStation_train_code() + "(" + TICKET_INFO.
                 getTrain_class_name() + ")");
         tv_date.setText(QueryActivity.SELECT_DATE_PARSERED);
-        parserLishi(TICKET_INFO.getLishi());
 
 
 
@@ -174,8 +185,12 @@ public class ShowTicketDetail extends ActionBarActivity {
         StringBuffer sb = new StringBuffer();
         String[] arr = str.split(":");
         if (Integer.parseInt(arr[0]) < 10){
-            Log.v(TAG, "ok");
+            sb.append(Integer.parseInt(arr[0]) + "小时" + arr[1] + "分钟");
+        } else {
+            sb.append(arr[0] + "小时" + arr[1] + "分钟");
         }
+        result = sb.toString();
+        Log.v(TAG, result);
         return result;
     }
 
@@ -293,6 +308,7 @@ public class ShowTicketDetail extends ActionBarActivity {
             Log.v(TAG, "Set pass Adapter!");
             initTicketNumPrice();
             updateViewPrice();
+            pd.dismiss();
 
 
 
@@ -362,7 +378,8 @@ public class ShowTicketDetail extends ActionBarActivity {
                 Log.v(TAG, PRICE_STRING);
                 Map<String, String> paramsQueryPassBy = new LinkedHashMap<String, String>();
                 paramsQueryPassBy.put("train_no", TICKET_INFO.getTrain_no());
-                paramsQueryPassBy.put("from_station_telecode", TICKET_INFO.getFrom_station_telecode());
+                paramsQueryPassBy.put("from_station_telecode", TICKET_INFO.
+                        getFrom_station_telecode());
                 paramsQueryPassBy.put("to_station_telecode", TICKET_INFO.getTo_station_telecode());
                 paramsQueryPassBy.put("depart_date", QueryActivity.SELECT_DATE_PARSERED);
                 String resultQueRPassBy = MainActivity.core.getRequest(
@@ -406,7 +423,8 @@ public class ShowTicketDetail extends ActionBarActivity {
             JsonObject obj = new JsonParser().parse(strJson).getAsJsonObject().get("data").
                     getAsJsonObject();
             Collection<String> keys = MainActivity.SEAT_TYPE_MAP.values();
-            for (Iterator<Map.Entry<String, JsonElement>> it = obj.entrySet().iterator(); it.hasNext(); ) {
+            for (Iterator<Map.Entry<String, JsonElement>> it = obj.entrySet().iterator(); it.
+                    hasNext(); ) {
                 Map.Entry<String, JsonElement> elementEntry = it.next();
                 if (!elementEntry.getValue().toString().equals("[]")){
                     sb.append(elementEntry.getKey() + ">" + elementEntry.getValue().toString().

@@ -5,23 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
-import com.cheart.do12306.app.domain.BaseQueryResult;
-import com.cheart.do12306.app.domain.ResultQueryListItem;
 import com.cheart.do12306.app.view.QueryActivity;
 import com.cheart.do12306.app.view.ShowQueryResult;
-import com.cheart.do12306.app.view.ShowTicketDetail;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,8 +36,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     public static final String STATION_TRAIN_CODE = "station_train_code";
     public static final String START_TIME = "start_time";
     public static final String ARRIVE_TIME = "arrive_time";
-    public static final String START_STATION_NAME = "start_station_name";
-    public static final String END_STATION_NAME = "end_station_name";
+    public static final String FROM_STATION_NAME = "from_station_name";
+    public static final String TO_STATION_NAME = "to_station_name";
     public static final String YZ_NUM = "yz_num";
     public static final String RZ_NUM = "rz_num";
     public static final String YW_NUM = "yw_num";
@@ -59,6 +54,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     public static final String TRAIN_CLASS_NAME = "train_class_name";
     private ProgressDialog pd;
 
+    public static boolean update = false;
+
     Context context;
 
     public QueryTicketTask(Context context) {
@@ -71,6 +68,12 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
         ShowQueryResult.DATE = strings[2];
 
         Log.v(TAG, "QUERY" + strings[0] + strings[1] + strings[2]);
+        if (strings.length >= 4){
+            if (strings[3].equals("update")){
+                update = true;
+            }
+        }
+
 
         String ticketQueryUrl = "https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date="
                 + strings[2]
@@ -110,10 +113,18 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
         ShowQueryResult.TICKET_BASEDATA_LIST = baseDatas;
         initTicketMap(baseDatas);
         Intent intent = new Intent(context, ShowQueryResult.class);
-        context.startActivity(intent);
-        pd.dismiss();
+        if(update){
+            ShowQueryResult.UPDATED = true;
+            pd.dismiss();
+        } else {
+            context.startActivity(intent);
+            pd.dismiss();
+        }
+
 
     }
+
+
 
     protected void initTicketMap(List<BaseData> baseDataList){
         ShowQueryResult.TICKET_MAP = new HashMap<String, Integer>();
@@ -180,8 +191,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
             m.put(STATION_TRAIN_CODE, bql.getStation_train_code());
             m.put(START_TIME, bql.getStart_time());
             m.put(ARRIVE_TIME, bql.getArrive_time());
-            m.put(START_STATION_NAME, bql.getStart_station_name());
-            m.put(END_STATION_NAME, bql.getEnd_station_name());
+            m.put(FROM_STATION_NAME, bql.getFrom_station_name());
+            m.put(TO_STATION_NAME, bql.getTo_station_name());
 
             m.put(TRAIN_CLASS, bql.getTrain_class_name());
             m.put(TRAIN_CLASS_NAME, bql.getTrain_class_name());

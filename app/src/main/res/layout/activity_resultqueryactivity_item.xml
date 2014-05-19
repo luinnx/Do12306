@@ -105,7 +105,7 @@
                             android:layout_weight="1"
                             android:textSize="19sp"
                             android:gravity="right|center_vertical"
-                            android:id="@+id/tv_resultQuery_startStationName"
+                            android:id="@+id/tv_resultQuery_fromStationName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="乌鲁木齐" />
@@ -130,7 +130,7 @@
                             android:gravity="right|center_vertical"
                             android:textSize="15sp"
                             android:layout_weight="1"
-                            android:id="@+id/tv_resultQuery_endStationName"
+                            android:id="@+id/tv_resultQuery_toStationName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="北京北" />

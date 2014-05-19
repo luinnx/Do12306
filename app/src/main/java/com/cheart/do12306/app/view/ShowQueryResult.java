@@ -2,7 +2,9 @@ package com.cheart.do12306.app.view;
 
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,17 +14,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
 import com.cheart.do12306.app.adapter.ResultQueryAdapter;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
 import com.cheart.do12306.app.task.QueryTicketTask;
+import com.cheart.do12306.app.util.DateHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +42,16 @@ public class ShowQueryResult extends Activity {
     public static List<BaseQueryLeft> TICKET_LIST;
     public static List<BaseData> TICKET_BASEDATA_LIST;
     public static Map<String, Integer> TICKET_MAP;
+    public static String[] DATE_CAN_BUY_ARRAY;
     public static String TICKET_NUM;
     public static String DATE = "";
     private ListView list = null;
+    private TextView tv_date;
+    private Button bt_pre;
+    private Button bt_next;
+    private Spinner sp_date;
+    public static boolean UPDATED = false;
+
 
 
     @Override
@@ -48,11 +63,29 @@ public class ShowQueryResult extends Activity {
 
 
     public void init(){
+        DATE = QueryActivity.SELECT_DATE_PARSERED;
         initView();
     }
 
     public void initView(){
         list = (ListView) findViewById(R.id.lv_showQueryResult);
+        bt_next = (Button) findViewById(R.id.bt_query_result_next);
+        bt_pre = (Button) findViewById(R.id.bt_query_result_pre);
+        sp_date = (Spinner) findViewById(R.id.sp_query_result_date);
+
+        sp_date.setAdapter(new ArrayAdapter<String>(
+                this,
+                R.layout.activity_query_date_item,
+                MainActivity.CAN_BUY_DATE.split(",")
+        ));
+        DATE_CAN_BUY_ARRAY = MainActivity.CAN_BUY_DATE.split(",");
+        for (int i = 0; i < DATE_CAN_BUY_ARRAY.length; i++){
+            if (DATE_CAN_BUY_ARRAY[i].equals(QueryActivity.SELECTED_DATE)){
+                sp_date.setSelection(i);
+                break;
+            }
+        }
+
         Log.v(TAG, "SET ADAPTER");
 //        Log.v(TAG, QueryActivity.QUERY_RESULT_LIST.toString());
         list.setAdapter(new ResultQueryAdapter(
@@ -62,6 +95,8 @@ public class ShowQueryResult extends Activity {
                 ResultQueryActivityListActivity.FROM,
                 ResultQueryActivityListActivity.TO
         ));
+
+
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,7 +111,74 @@ public class ShowQueryResult extends Activity {
                 startActivity(intent);
             }
         });
+
+        bt_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (DateHelper.isDateBprder(DateHelper.nextDate(DATE))){
+                    Toast.makeText(ShowQueryResult.this, "日期越界了!", Toast.LENGTH_LONG).show();
+                } else {
+                    DATE = DateHelper.parserDate(DateHelper.nextDate(DATE));
+                    QueryActivity.SELECT_DATE_PARSERED = DATE;
+                    Log.v(TAG, "ADD" + DATE);
+                    new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+                            QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
+                            QueryActivity.STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                            DATE/*SELECT_DATE_PARSERED*/,
+                            "update"
+
+                    });
+                    new UpdateQueryTask(ShowQueryResult.this).execute();
+                }
+
+            }
+        });
+
+        bt_pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (DateHelper.isDateBprder(DateHelper.preDate(DATE))){
+                    Toast.makeText(ShowQueryResult.this, "日期越界了!", Toast.LENGTH_LONG).show();
+                } else {
+                    DATE = DateHelper.parserDate(DateHelper.nextDate(DATE));
+                    QueryActivity.SELECT_DATE_PARSERED = DATE;
+                    Log.v(TAG, "ADD" + DATE);
+                    new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+                            QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
+                            QueryActivity.STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                            DATE/*SELECT_DATE_PARSERED*/,
+                            "update"
+
+                    });
+                    new UpdateQueryTask(ShowQueryResult.this).execute();
+                }
+            }
+        });
+
+        sp_date.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                DATE = DateHelper.parserDate(DATE_CAN_BUY_ARRAY[i]);
+                QueryActivity.SELECT_DATE_PARSERED = DATE;
+                new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+                        QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
+                        QueryActivity.STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                        DATE/*SELECT_DATE_PARSERED*/,
+                        "update"
+
+                });
+                new UpdateQueryTask(ShowQueryResult.this).execute();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,5 +197,40 @@ public class ShowQueryResult extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class UpdateQueryTask extends AsyncTask<String, Integer, String>{
+
+        Context context;
+
+        UpdateQueryTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            while (!UPDATED){
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            list.setAdapter(new ResultQueryAdapter(
+                    ShowQueryResult.this,
+                    QueryActivity.QUERY_RESULT_LIST,
+                    R.layout.activity_resultqueryactivity_item,
+                    ResultQueryActivityListActivity.FROM,
+                    ResultQueryActivityListActivity.TO
+            ));
+            super.onPostExecute(s);
+        }
     }
 }
