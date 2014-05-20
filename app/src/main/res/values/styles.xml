@@ -48,5 +48,15 @@
     </style>
 
 
+    <style name="tv_do_ticket_date">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+    <style name="ll_do_ticket">
+        <item name="android:background">@drawable/bg_ll_do_ticket</item>
+    </style>
+
+
 
 </resources>

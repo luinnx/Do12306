@@ -13,7 +13,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-               <!-- <category android:name="android.intent.category.LAUNCHER" />-->
+                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             </intent-filter>
         </activity>
         <activity
@@ -56,6 +56,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.UserCenter"
+            android:label="@string/title_activity_user_center" >
+        </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.DoTicket"
+            android:label="@string/title_activity_do_ticket" >
         </activity>
     </application>
 

@@ -148,7 +148,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         for (Iterator<String> it = SubmitOrderActivity.TICKET_INFO_MAP.keySet().iterator();
              it.hasNext();){
             to = (TicketOrder) SubmitOrderActivity.TICKET_INFO_MAP.get(it.next());
-            Log.v(TAG , "finally submit" + to.getName());
+            Log.v(TAG , "finally submit" + to.getName() + to.getSeatType());
         }
 
 
@@ -276,7 +276,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         StringBuffer sb = new StringBuffer();
         sb.append(
 
-                to.getSeatType() + interval + submitData.getConstStrig()
+                MainActivity.SEAT_TYPE_MAP.get(to.getSeatType()) + interval + submitData.getConstStrig()
                         + interval + submitData.getTicketTypeCode() + interval
                         + submitData.getName() + interval
                         + submitData.getPassengerIdTypeCode() + interval

@@ -114,6 +114,7 @@ public class SubmitOrderTicketInfoAdapter extends SimpleAdapter {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+
             }
         });
 
