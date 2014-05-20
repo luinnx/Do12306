@@ -21,6 +21,7 @@ import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
 import com.cheart.do12306.app.domain.PassStation;
+import com.cheart.do12306.app.task.SubmitOrderTask;
 import com.cheart.do12306.app.util.StringHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

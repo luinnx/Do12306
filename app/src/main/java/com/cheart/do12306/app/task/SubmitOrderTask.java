@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.RecognitionService;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -275,7 +276,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         StringBuffer sb = new StringBuffer();
         sb.append(
 
-                submitData.getSeatTypeCode() + interval + submitData.getConstStrig()
+                to.getSeatType() + interval + submitData.getConstStrig()
                         + interval + submitData.getTicketTypeCode() + interval
                         + submitData.getName() + interval
                         + submitData.getPassengerIdTypeCode() + interval
@@ -283,6 +284,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
                         + submitData.getMobileNo() + interval + submitData.getSave()
         );
         result = sb.toString();
+        Log.v(TAG, "TICKET_STR" + result);
 
         return result;
     }

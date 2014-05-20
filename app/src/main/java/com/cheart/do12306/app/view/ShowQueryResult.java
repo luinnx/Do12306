@@ -53,7 +53,6 @@ public class ShowQueryResult extends Activity {
     public static boolean UPDATED = false;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +61,12 @@ public class ShowQueryResult extends Activity {
     }
 
 
-    public void init(){
+    public void init() {
         DATE = QueryActivity.SELECT_DATE_PARSERED;
         initView();
     }
 
-    public void initView(){
+    public void initView() {
         list = (ListView) findViewById(R.id.lv_showQueryResult);
         bt_next = (Button) findViewById(R.id.bt_query_result_next);
         bt_pre = (Button) findViewById(R.id.bt_query_result_pre);
@@ -76,11 +75,11 @@ public class ShowQueryResult extends Activity {
         sp_date.setAdapter(new ArrayAdapter<String>(
                 this,
                 R.layout.activity_query_date_item,
-                MainActivity.CAN_BUY_DATE.split(",")
+                MainActivity.CAN_BUY_DATE_SIMPLE.split(",")
         ));
         DATE_CAN_BUY_ARRAY = MainActivity.CAN_BUY_DATE.split(",");
-        for (int i = 0; i < DATE_CAN_BUY_ARRAY.length; i++){
-            if (DATE_CAN_BUY_ARRAY[i].equals(QueryActivity.SELECTED_DATE)){
+        for (int i = 0; i < DATE_CAN_BUY_ARRAY.length; i++) {
+            if (DATE_CAN_BUY_ARRAY[i].equals(QueryActivity.SELECTED_DATE)) {
                 sp_date.setSelection(i);
                 break;
             }
@@ -97,14 +96,13 @@ public class ShowQueryResult extends Activity {
         ));
 
 
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(ShowQueryResult.this, ShowTicketDetail.class);
                 Log.v(TAG, "TN" + QueryActivity.QUERY_RESULT_LIST.get(i).
                         get("ticket_num"));
-                intent.putExtra("ticket_num",QueryActivity.QUERY_RESULT_LIST.get(i).
+                intent.putExtra("ticket_num", QueryActivity.QUERY_RESULT_LIST.get(i).
                         get("ticket_num"));
                 intent.putExtra("ticket_info", ShowQueryResult.TICKET_LIST.get(i));
                 intent.putExtra("ticket_info_baseData", ShowQueryResult.TICKET_BASEDATA_LIST.get(i));
@@ -115,7 +113,7 @@ public class ShowQueryResult extends Activity {
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (DateHelper.isDateBprder(DateHelper.nextDate(DATE))){
+                if (DateHelper.isDateBprder(DateHelper.nextDate(DATE))) {
                     Toast.makeText(ShowQueryResult.this, "日期越界了!", Toast.LENGTH_LONG).show();
                 } else {
                     DATE = DateHelper.parserDate(DateHelper.nextDate(DATE));
@@ -137,10 +135,10 @@ public class ShowQueryResult extends Activity {
         bt_pre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (DateHelper.isDateBprder(DateHelper.preDate(DATE))){
+                if (DateHelper.isDateBprder(DateHelper.preDate(DATE))) {
                     Toast.makeText(ShowQueryResult.this, "日期越界了!", Toast.LENGTH_LONG).show();
                 } else {
-                    DATE = DateHelper.parserDate(DateHelper.nextDate(DATE));
+                    DATE = DateHelper.parserDate(DateHelper.preDate(DATE));
                     QueryActivity.SELECT_DATE_PARSERED = DATE;
                     Log.v(TAG, "ADD" + DATE);
                     new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
@@ -179,7 +177,6 @@ public class ShowQueryResult extends Activity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -193,13 +190,14 @@ public class ShowQueryResult extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    class UpdateQueryTask extends AsyncTask<String, Integer, String>{
+    class UpdateQueryTask extends AsyncTask<String, Integer, String> {
 
         Context context;
 
@@ -210,7 +208,7 @@ public class ShowQueryResult extends Activity {
         @Override
         protected String doInBackground(String... strings) {
 
-            while (!UPDATED){
+            while (!UPDATED) {
 
             }
             return null;

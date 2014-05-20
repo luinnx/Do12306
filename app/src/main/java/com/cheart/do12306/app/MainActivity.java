@@ -42,7 +42,6 @@ import java.util.Map;
 public class MainActivity extends Activity {
 
 
-
     private static final String TAG = "MainActivity";
     public static ClientCore core = null;
     public static final String INDEX = "https://kyfw.12306.cn/otn/";
@@ -58,6 +57,7 @@ public class MainActivity extends Activity {
     public static Map<String, String> TICKET_TYPE;
 
     public static String CAN_BUY_DATE = "";
+    public static String CAN_BUY_DATE_SIMPLE = "";
 
 
     public static final int WHAT_GET_RANDOM_CODE = 1;
@@ -108,25 +108,23 @@ public class MainActivity extends Activity {
         SEAT_TYPE_MAP.put("二等座", "O");
         SEAT_TYPE_MAP.put("一等座", "M");
         SEAT_TYPE_MAP.put("特等座", "P");
-        SEAT_TYPE_MAP.put("硬座","1");
-        SEAT_TYPE_MAP.put("软座","2");
-        SEAT_TYPE_MAP.put("硬卧","3");
-        SEAT_TYPE_MAP.put("软卧","4");
-        SEAT_TYPE_MAP.put("高级软卧","6");
+        SEAT_TYPE_MAP.put("硬座", "1");
+        SEAT_TYPE_MAP.put("软座", "2");
+        SEAT_TYPE_MAP.put("硬卧", "3");
+        SEAT_TYPE_MAP.put("软卧", "4");
+        SEAT_TYPE_MAP.put("高级软卧", "6");
         SEAT_TYPE_MAP.put("商务座", "9");
-
 
 
         SEAT_TYPE_CODE_MAP.put("二等座", "O");
         SEAT_TYPE_CODE_MAP.put("一等座", "M");
         SEAT_TYPE_CODE_MAP.put("特等座", "P");
-        SEAT_TYPE_CODE_MAP.put("硬座","A1");
-        SEAT_TYPE_CODE_MAP.put("软座","A2");
-        SEAT_TYPE_CODE_MAP.put("硬卧","A3");
-        SEAT_TYPE_CODE_MAP.put("软卧","A4");
-        SEAT_TYPE_CODE_MAP.put("高级软卧","A6");
+        SEAT_TYPE_CODE_MAP.put("硬座", "A1");
+        SEAT_TYPE_CODE_MAP.put("软座", "A2");
+        SEAT_TYPE_CODE_MAP.put("硬卧", "A3");
+        SEAT_TYPE_CODE_MAP.put("软卧", "A4");
+        SEAT_TYPE_CODE_MAP.put("高级软卧", "A6");
         SEAT_TYPE_CODE_MAP.put("商务座", "A9");
-
 
 
         TICKET_TYPE.put("成人", "1");
@@ -171,6 +169,7 @@ public class MainActivity extends Activity {
     public String loadCanBuyDate() {
         String result = "";
         StringBuffer sb = new StringBuffer();
+        StringBuffer sb1 = new StringBuffer();
         String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -179,17 +178,20 @@ public class MainActivity extends Activity {
         int week = c.get(Calendar.DAY_OF_WEEK) - 1;
         sb.append(year + "年" + (month < 10 ? "0" + month : month) + "月" + (day < 10 ? "0" + day : day) + "日" + "(" +
                 weekDays[week] + ")" + ",");
+        sb1.append(DateHelper.parserDate(year + "年" + (month < 10 ? "0" + month : month) + "月" + (day < 10 ? "0" + day : day) + "日" + "(" +
+                weekDays[week] + ")") + ",");
 
-        for (int i = 0 ; i < 19; i++){
+
+        for (int i = 0; i < 19; i++) {
             int dayCountOfMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
-            if (day >= dayCountOfMonth){
+            if (day >= dayCountOfMonth) {
                 month++;
                 day = 1;
                 c = DateHelper.setNewCalendar(year, month, day);
                 week = c.get(Calendar.DAY_OF_WEEK) - 1;
 
 
-            } else{
+            } else {
                 day++;
                 c = DateHelper.setNewCalendar(year, month - 1, day);
                 week = c.get(Calendar.DAY_OF_WEEK) - 1;
@@ -197,9 +199,13 @@ public class MainActivity extends Activity {
 
             sb.append(year + "年" + (month < 10 ? "0" + month : month) + "月" + (day < 10 ? "0" + day : day) + "日" + "(" +
                     weekDays[week] + ")" + ",");
+            sb1.append(DateHelper.parserDate(year + "年" + (month < 10 ? "0" + month : month) + "月" + (day < 10 ? "0" + day : day) + "日" + "(" +
+                    weekDays[week] + ")") + ",");
+
+
         }
         result = sb.toString();
-        Log.v(TAG, result);
+        CAN_BUY_DATE_SIMPLE = sb1.toString();
         return result;
 
 
@@ -283,7 +289,7 @@ public class MainActivity extends Activity {
                                 Log.v(TAG, "CHECK RANDOM_CODE ERROR:");
                                 pd.dismiss();
                                 Toast.makeText(context, "random code is error!", Toast.LENGTH_LONG);
-                              //  doInBackground(userName, password);
+                                //  doInBackground(userName, password);
                             } else if (msg.arg1 == ARG_1_RANDOM_PASSWORD_ERROR) {
                                 Log.v(TAG, "PASSWORD ERROR:");
                                 pd.dismiss();
@@ -310,10 +316,10 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             Log.v(TAG, "finally ok!!");
-            if (success){
+            if (success) {
                 Intent intent = new Intent(MainActivity.this, QueryActivity.class);
                 MainActivity.this.startActivity(intent);
-            //    MainActivity.this.finish();
+                //    MainActivity.this.finish();
             }
 
         }
@@ -377,7 +383,7 @@ public class MainActivity extends Activity {
                     case R.id.bt_main_dialog_ok:
                         pd.show();
                         toLogin = true;
-                        imm.hideSoftInputFromWindow(et_randomCode.getWindowToken(),0);
+                        imm.hideSoftInputFromWindow(et_randomCode.getWindowToken(), 0);
                         break;
                     case R.id.bt_main_dialog_cancel:
                         dialogLogin.dismiss();
@@ -486,7 +492,7 @@ public class MainActivity extends Activity {
                 Log.v(TAG, "OBJ is" + obj);
                 Log.v(TAG, "new json obj is:" + new JsonObject());
                 Log.v(TAG, "new json obj toString is" + obj.toString());
-                if (obj.toString().equals("{}")){
+                if (obj.toString().equals("{}")) {
                     Log.v(TAG, "accpet null!!!");
                     return RETURN_LOGIN_PASSWORD_ERROR;
                 } else {
@@ -500,7 +506,7 @@ public class MainActivity extends Activity {
                         msg.what = WHAT_LOGIN;
                         msg.arg1 = ARG_1_RANDOM_PASSWORD_ERROR;
                         handler.sendMessage(msg);
-                      //  new Thread(new GetRandomCodeThread()).start();
+                        //  new Thread(new GetRandomCodeThread()).start();
                         return RETURN_LOGIN_PASSWORD_ERROR;
                     }
                 }
@@ -543,7 +549,7 @@ public class MainActivity extends Activity {
 
             public void initPassengerMap(List<Passenger> list) {
 
-                for (int i = 0; i < list.size(); i++){
+                for (int i = 0; i < list.size(); i++) {
                     PASSENGERS_MAP.put(list.get(i).getPassenger_name(), i);
                 }
 

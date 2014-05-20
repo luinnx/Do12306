@@ -36,4 +36,17 @@
         <item name="android:drawable">@null</item>
     </style>
 
+
+    <style name="tv_show_query_result_ticket_num">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+    <style name="tv_show_query_result_ticket_price">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#ff55947e</item>
+    </style>
+
+
+
 </resources>

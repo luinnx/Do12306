@@ -147,6 +147,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    style="@style/tv_show_query_result_ticket_num"
                     android:textColor="@color/query_result_y"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_t0"
@@ -154,17 +155,17 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
                 <TextView
-                    android:textColor="#ffa97633"
+                    style="@style/tv_show_query_result_ticket_price"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_p0"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
 
             </LinearLayout>
@@ -178,6 +179,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    style="@style/tv_show_query_result_ticket_num"
                     android:textColor="@color/query_result_y"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_t1"
@@ -185,17 +187,17 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
                 <TextView
-                    android:textColor="#ffa97633"
+                    style="@style/tv_show_query_result_ticket_price"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_p1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
 
                 </LinearLayout>
@@ -215,6 +217,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    style="@style/tv_show_query_result_ticket_num"
                     android:textColor="@color/query_result_y"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_t2"
@@ -222,17 +225,17 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
                 <TextView
-                    android:textColor="#ffa97633"
+                    style="@style/tv_show_query_result_ticket_price"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_p2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
 
             </LinearLayout>
@@ -246,6 +249,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    style="@style/tv_show_query_result_ticket_num"
                     android:textColor="@color/query_result_y"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_t3"
@@ -253,17 +257,17 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
                 <TextView
-                    android:textColor="#ffa97633"
+                    style="@style/tv_show_query_result_ticket_price"
                     android:layout_weight="1"
                     android:id="@+id/tv_showTicketDetail_p3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="20sp" />
+                     />
 
 
 
