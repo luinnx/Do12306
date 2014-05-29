@@ -10,6 +10,7 @@ import android.widget.SimpleAdapter;
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
 import com.cheart.do12306.app.adapter.SelectPassengerAdapter;
+import com.cheart.do12306.app.client.CommunalData;
 import com.cheart.do12306.app.domain.Passenger;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class SelectPassengerActivity extends ActionBarActivity {
     public void init() {
         PASSENGER_LIST = new ArrayList<Map<String, String>>();
         int id = 0;
-        for (Iterator<Passenger> it = MainActivity.PASSENGERS.iterator(); it.hasNext(); ) {
+        for (Iterator<Passenger> it = CommunalData.getPASSENGER_LIST().iterator(); it.hasNext(); ) {
             Passenger p = it.next();
             Map<String, String> m = new HashMap<String, String>();
             m.put(ID, (++id + ""));

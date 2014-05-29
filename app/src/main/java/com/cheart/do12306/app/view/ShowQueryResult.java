@@ -114,7 +114,7 @@ public class ShowQueryResult extends Activity {
             @Override
             public void onClick(View view) {
                 if (DateHelper.isDateBprder(DateHelper.nextDate(DATE))) {
-                    Toast.makeText(ShowQueryResult.this, "日期越界了!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ShowQueryResult.this, DATE + "不在车票预售日期内!", Toast.LENGTH_LONG).show();
                 } else {
                     DATE = DateHelper.parserDate(DateHelper.nextDate(DATE));
                     QueryActivity.SELECT_DATE_PARSERED = DATE;
@@ -136,7 +136,7 @@ public class ShowQueryResult extends Activity {
             @Override
             public void onClick(View view) {
                 if (DateHelper.isDateBprder(DateHelper.preDate(DATE))) {
-                    Toast.makeText(ShowQueryResult.this, "日期越界了!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ShowQueryResult.this, DATE + "不在车票预售日期内!", Toast.LENGTH_LONG).show();
                 } else {
                     DATE = DateHelper.parserDate(DateHelper.preDate(DATE));
                     QueryActivity.SELECT_DATE_PARSERED = DATE;

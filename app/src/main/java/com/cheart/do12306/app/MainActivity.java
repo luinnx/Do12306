@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cheart.do12306.app.client.CommunalData;
 import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
@@ -33,6 +35,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,8 +52,8 @@ public class MainActivity extends Activity {
     public static final String POST_CHECK_RANDOM_CODE = "https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn";
     public static final String POST_LOGIN_ASYNC_SUGGEST = "https://kyfw.12306.cn/otn/login/loginAysnSuggest";
     public static final String USER_LOGIN = "https://kyfw.12306.cn/otn/login/userLogin";
-    public static List<Passenger> PASSENGERS = null;
-    public static Map<String, Integer> PASSENGERS_MAP = null;
+
+
 
     public static Map<String, String> SEAT_TYPE_MAP;
     public static Map<String, String> SEAT_TYPE_CODE_MAP;
@@ -88,9 +91,10 @@ public class MainActivity extends Activity {
     public void init() {
         core = new ClientCore();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        PASSENGERS_MAP = new HashMap<String, Integer>();
         CAN_BUY_DATE = loadCanBuyDate();
+        CommunalData.setCAN_BUY_DATE(loadCanBuyDate());
         SEAT_TYPE_CODE_MAP = new HashMap();
+        CommunalData.loadAllStation(this);
         initView();
         handler = new Handler() {
             @Override
@@ -182,7 +186,7 @@ public class MainActivity extends Activity {
                 weekDays[week] + ")") + ",");
 
 
-        for (int i = 0; i < 19; i++) {
+        for (int i = 0; i < 17; i++) {
             int dayCountOfMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
             if (day >= dayCountOfMonth) {
                 month++;
@@ -206,6 +210,7 @@ public class MainActivity extends Activity {
         }
         result = sb.toString();
         CAN_BUY_DATE_SIMPLE = sb1.toString();
+        CommunalData.setCAN_BUY_DATE_SIMPLE(sb1.toString());
         return result;
 
 
@@ -317,6 +322,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(String s) {
             Log.v(TAG, "finally ok!!");
             if (success) {
+                CommunalData.setIsLogin(true);
                 Intent intent = new Intent(MainActivity.this, QueryActivity.class);
                 MainActivity.this.startActivity(intent);
                 //    MainActivity.this.finish();
@@ -537,21 +543,27 @@ public class MainActivity extends Activity {
                         .getAsJsonObject();
                 JsonArray objects = object.get("data").getAsJsonObject()
                         .get("normal_passengers").getAsJsonArray();
-                PASSENGERS = new Gson().fromJson(objects,
+                CommunalData.setPASSENGER_LIST(new Gson().<List<Passenger>>fromJson(objects,
                         new TypeToken<List<Passenger>>() {
                         }.getType()
-                );
-                initPassengerMap(PASSENGERS);
-                Log.v(TAG, "PASSENGER" + PASSENGERS.get(1).getPassenger_name());
+                ));
+
+                initPassengerMap(CommunalData.getPASSENGER_LIST());
+
 
 
             }
 
             public void initPassengerMap(List<Passenger> list) {
 
+                Map<String, Integer> map = new HashMap<String, Integer>();
+
                 for (int i = 0; i < list.size(); i++) {
-                    PASSENGERS_MAP.put(list.get(i).getPassenger_name(), i);
+                    map.put(list.get(i).getPassenger_name(), i);
                 }
+
+                CommunalData.setPASSENGER_MAP(map);
+                Log.v(TAG, "" + CommunalData.getPASSENGER_MAP());
 
             }
 

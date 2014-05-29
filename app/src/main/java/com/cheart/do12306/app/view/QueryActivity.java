@@ -69,7 +69,7 @@ public class QueryActivity extends Activity {
                 new QueryTicketTask(QueryActivity.this).execute(new String[]{
                         STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
                         STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
-                        "2014-05-23"/*SELECT_DATE_PARSERED*/
+                        SELECT_DATE_PARSERED
                 });
 
 

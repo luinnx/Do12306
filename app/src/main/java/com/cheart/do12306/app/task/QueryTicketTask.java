@@ -65,6 +65,11 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
     @Override
     protected List<Map<String, String>> doInBackground(String... strings) {
 
+        return query(strings);
+
+    }
+
+    protected List<Map<String, String>> query(String... strings){
         ShowQueryResult.DATE = strings[2];
 
         Log.v(TAG, "QUERY" + strings[0] + strings[1] + strings[2]);
@@ -72,6 +77,8 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
             if (strings[3].equals("update")){
                 update = true;
             }
+        } else {
+            update = false;
         }
 
 
@@ -85,7 +92,6 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
                 null, HttpsHeader.tiketSearch(), null, false);
         Log.v(TAG, resultTicketQuery);
         return parserResultQueryItemFromQueryResult(resultTicketQuery);
-
 
     }
 
@@ -114,9 +120,11 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
         initTicketMap(baseDatas);
         Intent intent = new Intent(context, ShowQueryResult.class);
         if(update){
+            Log.v(TAG, "FOR UPDATE");
             ShowQueryResult.UPDATED = true;
             pd.dismiss();
         } else {
+            Log.v(TAG, "FOR START ACTIVITY");
             context.startActivity(intent);
             pd.dismiss();
         }
@@ -126,7 +134,7 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
 
 
 
-    protected void initTicketMap(List<BaseData> baseDataList){
+    protected void initTicketMap(List<BaseData> baseDataList) {
         ShowQueryResult.TICKET_MAP = new HashMap<String, Integer>();
         for (int i = 0; i < baseDataList.size(); i++){
             ShowQueryResult.TICKET_MAP.put(baseDataList.get(i).getQueryLeftNewDTO().

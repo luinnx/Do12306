@@ -20,6 +20,8 @@ import android.widget.TabHost;
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
 
+import junit.framework.Test;
+
 public class Main2Activity extends TabActivity {
 
 
@@ -47,6 +49,8 @@ public class Main2Activity extends TabActivity {
                 QueryActivity.class)));
         tabHost.addTab(tabHost.newTabSpec("doTicket").setIndicator("DO_TICKET").setContent(new Intent(this,
                 DoTicket.class)));
+        tabHost.addTab(tabHost.newTabSpec("testquery").setIndicator("TEST_QUERY").setContent(new Intent(this,
+                TestDoQuery.class)));
 
         tabHost.setCurrentTab(0);
     }

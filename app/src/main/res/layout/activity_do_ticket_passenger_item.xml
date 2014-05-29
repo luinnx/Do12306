@@ -13,30 +13,30 @@
 
 
         <CheckBox
-            style="@style/ck_do_ticket_date"
-            android:id="@+id/tv_do_ticket_date0"
+            style="@style/ck_do_ticket_passenger"
+            android:id="@+id/tv_do_ticket_passenger0"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
 
         <CheckBox
-            style="@style/ck_do_ticket_date"
-            android:id="@+id/tv_do_ticket_date1"
+            style="@style/ck_do_ticket_passenger"
+            android:id="@+id/tv_do_ticket_passenger1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <CheckBox
-            style="@style/ck_do_ticket_date"
-            android:id="@+id/tv_do_ticket_date2"
+            style="@style/ck_do_ticket_passenger"
+            android:id="@+id/tv_do_ticket_passenger2"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <CheckBox
-            style="@style/ck_do_ticket_date"
-            android:id="@+id/tv_do_ticket_date3"
+            style="@style/ck_do_ticket_passenger"
+            android:id="@+id/tv_do_ticket_passenger3"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

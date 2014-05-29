@@ -65,6 +65,10 @@
             android:name="com.cheart.do12306.app.view.DoTicket"
             android:label="@string/title_activity_do_ticket" >
         </activity>
+        <activity
+            android:name="com.cheart.do12306.app.view.TestDoQuery"
+            android:label="@string/title_activity_test_do_query" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
