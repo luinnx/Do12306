@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,6 @@ import java.util.Map;
 public class CommunalData {
 
 
-
     public static boolean isLogin = false;
     public static Map<String, String> STATION_MAP;
     public static String[] STATION_ARRAY;
@@ -29,15 +29,74 @@ public class CommunalData {
     public static String CAN_BUY_DATE_SIMPLE = "";
     public static List<Passenger> PASSENGER_LIST;
     public static Map<String, Integer> PASSENGER_MAP;
+    public static Map<String, String> SEAT_TYPE_MAP;
+    public static Map<String, String> SEAT_TYPE_CODE_MAP;
+    public static Map<String, String> TICKET_TYPE;
 
 
 
-    static{
+
+    static {
 
         STATION_MAP = new HashMap<String, String>();
         STATION_ARRAY = new String[]{};
+        PASSENGER_LIST = new ArrayList<Passenger>();
+        PASSENGER_MAP = new HashMap<String, Integer>();
+        SEAT_TYPE_MAP = new HashMap<String, String>();
+        SEAT_TYPE_CODE_MAP = new HashMap<String, String>();
+        TICKET_TYPE = new HashMap<String, String>();
+
+        SEAT_TYPE_MAP = new HashMap<String, String>();
+        SEAT_TYPE_MAP.put("二等座", "O");
+        SEAT_TYPE_MAP.put("一等座", "M");
+        SEAT_TYPE_MAP.put("特等座", "P");
+        SEAT_TYPE_MAP.put("硬座", "1");
+        SEAT_TYPE_MAP.put("软座", "2");
+        SEAT_TYPE_MAP.put("硬卧", "3");
+        SEAT_TYPE_MAP.put("软卧", "4");
+        SEAT_TYPE_MAP.put("高级软卧", "6");
+        SEAT_TYPE_MAP.put("商务座", "9");
+
+        SEAT_TYPE_CODE_MAP.put("二等座", "O");
+        SEAT_TYPE_CODE_MAP.put("一等座", "M");
+        SEAT_TYPE_CODE_MAP.put("特等座", "P");
+        SEAT_TYPE_CODE_MAP.put("硬座", "A1");
+        SEAT_TYPE_CODE_MAP.put("软座", "A2");
+        SEAT_TYPE_CODE_MAP.put("硬卧", "A3");
+        SEAT_TYPE_CODE_MAP.put("软卧", "A4");
+        SEAT_TYPE_CODE_MAP.put("高级软卧", "A6");
+        SEAT_TYPE_CODE_MAP.put("商务座", "A9");
+
+        TICKET_TYPE.put("成人", "1");
+        TICKET_TYPE.put("孩票", "2");
+        TICKET_TYPE.put("学生", "3");
+        TICKET_TYPE.put("伤残军人票", "4");
     }
 
+
+    public static Map<String, String> getSEAT_TYPE_MAP() {
+        return SEAT_TYPE_MAP;
+    }
+
+    public static void setSEAT_TYPE_MAP(Map<String, String> SEAT_TYPE_MAP) {
+        CommunalData.SEAT_TYPE_MAP = SEAT_TYPE_MAP;
+    }
+
+    public static Map<String, String> getSEAT_TYPE_CODE_MAP() {
+        return SEAT_TYPE_CODE_MAP;
+    }
+
+    public static void setSEAT_TYPE_CODE_MAP(Map<String, String> SEAT_TYPE_CODE_MAP) {
+        CommunalData.SEAT_TYPE_CODE_MAP = SEAT_TYPE_CODE_MAP;
+    }
+
+    public static Map<String, String> getTICKET_TYPE() {
+        return TICKET_TYPE;
+    }
+
+    public static void setTICKET_TYPE(Map<String, String> TICKET_TYPE) {
+        CommunalData.TICKET_TYPE = TICKET_TYPE;
+    }
 
     public static List<Passenger> getPASSENGER_LIST() {
         return PASSENGER_LIST;

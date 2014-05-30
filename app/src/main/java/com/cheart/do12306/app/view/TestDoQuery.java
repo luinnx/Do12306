@@ -14,6 +14,7 @@ import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
 import com.cheart.do12306.app.client.CommunalData;
 import com.cheart.do12306.app.core.HttpsHeader;
+import com.cheart.do12306.app.domain.BaseAutoQuery;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
 import com.google.gson.Gson;
@@ -23,31 +24,65 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TestDoQuery extends ActionBarActivity {
 
     private static final String TAG = "TestDoQuery";
     private TextView tv_result;
+    private BaseAutoQuery baq;
     public static List<BaseData> resultBaseDateList;
     public static List<Map<String, String>> resultTicketList;
-    List<String> testByTrainCode = new ArrayList<String>();
-    List<String> testBuSeatType = new ArrayList<String>();
+
+    public static boolean isCanBuy = false;
+    public static boolean isQueryFinished = false;
+    private String nowQueryDate = "";
+
+
+
+    List<String> byTrainCode = new ArrayList<String>();
+    Set<String> bySeatType = new HashSet<String>();
+    Set<String> byDate = new HashSet<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_do_query);
+        baq = (BaseAutoQuery) getIntent().getSerializableExtra("base_auto_query");
         init();
+
+
         Log.v(TAG, "TestDoQuery");
 
-        new QueryTicketTask(TestDoQuery.this).execute(new String[]{
-                CommunalData.getSTATION_MAP().get("北京"/*aet_from.getText().toString()*/),
-                CommunalData.getSTATION_MAP().get("上海"/*aet_to.getText().toString()*/),
-                "2014-05-30"
-        });
+        while(!isCanBuy){
+            Log.v(TAG, "dates:" + byDate);
+            for (String date : byDate){
+                nowQueryDate = date;
+                isQueryFinished = false;
+                Log.v(TAG, "query date is:" + nowQueryDate);
+                new QueryTicketTask(TestDoQuery.this).execute(new String[]{
+
+                        CommunalData.getSTATION_MAP().get("北京"/*aet_from.getText().toString()*/),
+                        CommunalData.getSTATION_MAP().get("上海"/*aet_to.getText().toString()*/),
+                        "2014-" + nowQueryDate
+
+                });
+
+                Log.v(TAG, "start while");
+
+                while (!isQueryFinished){
+
+                }
+
+                Log.v(TAG, "end while");
+
+            }
+
+       }
 
     }
 
@@ -55,12 +90,11 @@ public class TestDoQuery extends ActionBarActivity {
         resultBaseDateList = new ArrayList<BaseData>();
         resultTicketList = new ArrayList<Map<String, String>>();
         //test
-        testByTrainCode.add("G101");
-        testByTrainCode.add("G103");
-        testByTrainCode.add("G1");
-        testBuSeatType.add("二等座");
-        testBuSeatType.add("一等座");
-
+        byTrainCode.add("G101");
+        byTrainCode.add("G103");
+        byTrainCode.add("G1");
+        bySeatType = baq.getSeatType();
+        byDate = baq.getDate();
         initView();
     }
 
@@ -81,13 +115,13 @@ public class TestDoQuery extends ActionBarActivity {
         while (it.hasNext()) {
             boolean isMatch = false;
             Map<String, String> m = it.next();
-            if (testByTrainCode.contains(m.get(QueryTicketTask.STATION_TRAIN_CODE))) {
-                item.append(m.get(QueryTicketTask.STATION_TRAIN_CODE));
+            if (byTrainCode.contains(m.get(QueryTicketTask.STATION_TRAIN_CODE))) {
+                item.append(m.get(QueryTicketTask.STATION_TRAIN_CODE) + ">" + nowQueryDate);
                 String[] arr = m.get(QueryTicketTask.TICKET_NUM).split(",");
                 for (String s : arr) {
                     String num = s.split(">")[1];
                     String seatType = s.split(">")[0];
-                    if (testBuSeatType.contains(seatType)) {
+                    if (bySeatType.contains(seatType)) {
                         if (null != num && !num.equals("") && !num.equals("无")) {
                             isMatch = true;
                             item.append(">" + seatType);
@@ -206,7 +240,16 @@ public class TestDoQuery extends ActionBarActivity {
             Log.v(TAG, "R" + resultList.size());
             resultTicketList = resultList;
             resultBaseDateList = baseDatas;
-            Log.v(TAG, "" + filterTrainBySeatType(resultList));
+            isQueryFinished = true;
+            Log.v(TAG, "ISFINISH" + isQueryFinished);
+            String result = filterTrainBySeatType(resultList);
+            if (null != result && !result.equals("")){
+                isCanBuy = true;
+                Log.v(TAG, "parser result is:" + filterTrainBySeatType(resultList));
+
+            }
+
+
 
 
         }
@@ -273,7 +316,6 @@ public class TestDoQuery extends ActionBarActivity {
 
                 m.put(TRAIN_CLASS, bql.getTrain_class_name());
                 m.put(TRAIN_CLASS_NAME, bql.getTrain_class_name());
-                Log.v(TAG, m.size() + "ms");
                 result.add(m);
                 baseQueryLefts.add(bql);
             }

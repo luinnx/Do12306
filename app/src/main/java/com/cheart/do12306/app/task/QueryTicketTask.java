@@ -204,7 +204,6 @@ public class QueryTicketTask extends AsyncTask<String, Integer, List<Map<String,
 
             m.put(TRAIN_CLASS, bql.getTrain_class_name());
             m.put(TRAIN_CLASS_NAME, bql.getTrain_class_name());
-            Log.v(TAG, m.size() + "ms");
             result.add(m);
             baseQueryLefts.add(bql);
         }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
 import com.cheart.do12306.app.adapter.ShowTicketDetailPassAdapter;
+import com.cheart.do12306.app.client.CommunalData;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
@@ -329,7 +330,7 @@ public class ShowTicketDetail extends ActionBarActivity {
             Log.v(TAG, PRICE_STRING);
             for (int i = 0; i < arr1.length; i++){
                 for (int j = 0; j < arr2.length; j++){
-                    if (MainActivity.SEAT_TYPE_CODE_MAP.get(arr1[i].split(">")[0]).equals(arr2[j].
+                    if (CommunalData.getSEAT_TYPE_CODE_MAP().get(arr1[i].split(">")[0]).equals(arr2[j].
                             split(">")[0])){
                         Log.v(TAG, "INIT SUCCESS");
 
@@ -423,7 +424,6 @@ public class ShowTicketDetail extends ActionBarActivity {
             String result = "";
             JsonObject obj = new JsonParser().parse(strJson).getAsJsonObject().get("data").
                     getAsJsonObject();
-            Collection<String> keys = MainActivity.SEAT_TYPE_MAP.values();
             for (Iterator<Map.Entry<String, JsonElement>> it = obj.entrySet().iterator(); it.
                     hasNext(); ) {
                 Map.Entry<String, JsonElement> elementEntry = it.next();

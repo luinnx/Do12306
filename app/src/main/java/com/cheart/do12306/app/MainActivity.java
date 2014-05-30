@@ -54,11 +54,6 @@ public class MainActivity extends Activity {
     public static final String USER_LOGIN = "https://kyfw.12306.cn/otn/login/userLogin";
 
 
-
-    public static Map<String, String> SEAT_TYPE_MAP;
-    public static Map<String, String> SEAT_TYPE_CODE_MAP;
-    public static Map<String, String> TICKET_TYPE;
-
     public static String CAN_BUY_DATE = "";
     public static String CAN_BUY_DATE_SIMPLE = "";
 
@@ -93,7 +88,7 @@ public class MainActivity extends Activity {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         CAN_BUY_DATE = loadCanBuyDate();
         CommunalData.setCAN_BUY_DATE(loadCanBuyDate());
-        SEAT_TYPE_CODE_MAP = new HashMap();
+
         CommunalData.loadAllStation(this);
         initView();
         handler = new Handler() {
@@ -107,34 +102,6 @@ public class MainActivity extends Activity {
 
             }
         };
-        TICKET_TYPE = new HashMap<String, String>();
-        SEAT_TYPE_MAP = new HashMap<String, String>();
-        SEAT_TYPE_MAP.put("二等座", "O");
-        SEAT_TYPE_MAP.put("一等座", "M");
-        SEAT_TYPE_MAP.put("特等座", "P");
-        SEAT_TYPE_MAP.put("硬座", "1");
-        SEAT_TYPE_MAP.put("软座", "2");
-        SEAT_TYPE_MAP.put("硬卧", "3");
-        SEAT_TYPE_MAP.put("软卧", "4");
-        SEAT_TYPE_MAP.put("高级软卧", "6");
-        SEAT_TYPE_MAP.put("商务座", "9");
-
-
-        SEAT_TYPE_CODE_MAP.put("二等座", "O");
-        SEAT_TYPE_CODE_MAP.put("一等座", "M");
-        SEAT_TYPE_CODE_MAP.put("特等座", "P");
-        SEAT_TYPE_CODE_MAP.put("硬座", "A1");
-        SEAT_TYPE_CODE_MAP.put("软座", "A2");
-        SEAT_TYPE_CODE_MAP.put("硬卧", "A3");
-        SEAT_TYPE_CODE_MAP.put("软卧", "A4");
-        SEAT_TYPE_CODE_MAP.put("高级软卧", "A6");
-        SEAT_TYPE_CODE_MAP.put("商务座", "A9");
-
-
-        TICKET_TYPE.put("成人", "1");
-        TICKET_TYPE.put("孩票", "2");
-        TICKET_TYPE.put("学生", "3");
-        TICKET_TYPE.put("伤残军人票", "4");
 
 
         bt_login.setOnClickListener(new View.OnClickListener() {
@@ -549,7 +516,6 @@ public class MainActivity extends Activity {
                 ));
 
                 initPassengerMap(CommunalData.getPASSENGER_LIST());
-
 
 
             }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
+import com.cheart.do12306.app.client.CommunalData;
 import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.BaseData;
@@ -272,11 +273,10 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         initSubmitData();
         String result = "";
         String interval = ",";
-
         StringBuffer sb = new StringBuffer();
         sb.append(
 
-                MainActivity.SEAT_TYPE_MAP.get(to.getSeatType()) + interval + submitData.getConstStrig()
+                CommunalData.getSEAT_TYPE_MAP().get(to.getSeatType()) + interval + submitData.getConstStrig()
                         + interval + submitData.getTicketTypeCode() + interval
                         + submitData.getName() + interval
                         + submitData.getPassengerIdTypeCode() + interval
@@ -305,10 +305,9 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     }
 
     public void initSubmitData() {
-        Log.v(TAG, "seat!!!" + MainActivity.SEAT_TYPE_MAP.get(to.getSeatType()) + "ticketType" +
-                MainActivity.TICKET_TYPE.get(to.getTicketType()));
-        submitData.setSeatTypeCode(MainActivity.SEAT_TYPE_MAP.get(to.getSeatType()));// seat type
-        submitData.setTicketTypeCode(MainActivity.TICKET_TYPE.get(to.getTicketType()));// ticket type
+
+        submitData.setSeatTypeCode(CommunalData.getSEAT_TYPE_MAP().get(to.getSeatType()));// seat type
+        submitData.setTicketTypeCode(CommunalData.getTICKET_TYPE().get(to.getTicketType()));// ticket type
         submitData.setName(submitPassenger.getPassenger_name());
         submitData.setPassengerIdTypeCode(submitPassenger
                 .getPassenger_id_type_code());
