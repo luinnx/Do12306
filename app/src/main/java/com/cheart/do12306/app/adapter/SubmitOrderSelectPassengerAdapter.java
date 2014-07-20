@@ -10,7 +10,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.cheart.do12306.app.R;
-import com.cheart.do12306.app.view.SubmitOrderActivity;
+
 
 import java.util.HashMap;
 import java.util.List;

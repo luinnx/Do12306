@@ -11,7 +11,6 @@ import android.util.Log;
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
-import com.cheart.do12306.app.view.SubmitOrderActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

@@ -17,6 +17,6 @@ import com.cheart.do12306.app.R;
 public class QueryFragement extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_query, container, false);
+        return null;
     }
 }
