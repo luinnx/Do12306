@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +17,7 @@ import android.widget.Spinner;
 
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
+import com.cheart.do12306.app.client.CommunalData;
 import com.cheart.do12306.app.task.QueryTicketTask;
 
 import java.io.BufferedReader;
@@ -42,6 +45,12 @@ public class QueryActivity extends Activity {
 
     public static List<Map<String, String>> QUERY_RESULT_LIST = null;
     public static String CAN_BY_DATE = "";
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +74,12 @@ public class QueryActivity extends Activity {
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SELECT_DATE_PARSERED = parserDate(SELECTED_DATE);
-                new QueryTicketTask(QueryActivity.this).execute(new String[]{
-                        STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
-                        STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                //SELECT_DATE_PARSERED = parserDate(SELECTED_DATE);
+                SELECT_DATE_PARSERED = "2014-08-30";
+                Log.v(TAG,"NEWWW" + SELECT_DATE_PARSERED);
+                new QueryTicketTask(QueryActivity.this,handler).execute(new String[]{
+                        STATION_MAP.get(CommunalData.from/*aet_from.getText().toString()*/),
+                        STATION_MAP.get(CommunalData.to/*aet_to.getText().toString()*/),
                         SELECT_DATE_PARSERED
                 });
 

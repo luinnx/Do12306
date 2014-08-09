@@ -57,12 +57,20 @@ import com.cheart.do12306.app.task.SubmitOrderTask;
 
 public class SubmitOrderActivity extends ActionBarActivity {
     public static String CAN_SEAT_TYPE = null;
-    public static final String[] FROM = null;
+
     public static final String NAME_1 = "name_1";
     public static final String NAME_2 = "name_2";
     public static final String NAME_3 = "name_3";
     public static final String NAME_4 = "name_4";
-    private static final int[] TO = null;
+    public static final String[] FROM = new String[]{NAME_1, NAME_2, NAME_3, NAME_4};
+    private static final int[] TO = new int[]{
+
+            R.id.tv_submitOrder_selectPassenger_name_1,
+            R.id.tv_submitOrder_selectPassenger_name_2,
+            R.id.tv_submitOrder_selectPassenger_name_3,
+            R.id.tv_submitOrder_selectPassenger_name_4,
+
+    };
     public static List<Map<String, String>> PASSENGER_LIST = null;
     public static Map<String, String[]> PASSENGER_MAP = null;
     private static final String TAG = "SubmitOrderActivity";
@@ -90,32 +98,32 @@ public class SubmitOrderActivity extends ActionBarActivity {
 
     public void initCanTicketType(BaseQueryLeft baseQueryLeft) {
         StringBuffer sb = new StringBuffer();
-        if ((!baseQueryLeft.getYz_num().equals("\u65e0")) && (!baseQueryLeft.getYz_num().equals("--"))) {
-            sb.append("\u786c\u5ea7,");
+        if ((!baseQueryLeft.getYz_num().equals("无")) && (!baseQueryLeft.getYz_num().equals("--"))) {
+            sb.append("硬座,");
         }
-        if ((!baseQueryLeft.getRz_num().equals("\u65e0")) && (!baseQueryLeft.getRz_num().equals("--"))) {
-            sb.append("\u8f6f\u5ea7,");
+        if ((!baseQueryLeft.getRz_num().equals("无")) && (!baseQueryLeft.getRz_num().equals("--"))) {
+            sb.append("软座,");
         }
-        if ((!baseQueryLeft.getYw_num().equals("\u65e0")) && (!baseQueryLeft.getYw_num().equals("--"))) {
-            sb.append("\u786c\u5367,");
+        if ((!baseQueryLeft.getYw_num().equals("无")) && (!baseQueryLeft.getYw_num().equals("--"))) {
+            sb.append("硬卧,");
         }
-        if ((!baseQueryLeft.getRw_num().equals("\u65e0")) && (!baseQueryLeft.getRw_num().equals("--"))) {
-            sb.append("\u8f6f\u5367,");
+        if ((!baseQueryLeft.getRw_num().equals("无")) && (!baseQueryLeft.getRw_num().equals("--"))) {
+            sb.append("软卧,");
         }
-        if ((!baseQueryLeft.getGr_num().equals("\u65e0")) && (!baseQueryLeft.getGr_num().equals("--"))) {
-            sb.append("\u9ad8\u7ea7\u8f6f\u5367,");
+        if ((!baseQueryLeft.getGr_num().equals("无")) && (!baseQueryLeft.getGr_num().equals("--"))) {
+            sb.append("高级软卧,");
         }
-        if ((!baseQueryLeft.getZy_num().equals("\u65e0")) && (!baseQueryLeft.getZy_num().equals("--"))) {
-            sb.append("\u4e00\u7b49\u5ea7,");
+        if ((!baseQueryLeft.getZy_num().equals("无")) && (!baseQueryLeft.getZy_num().equals("--"))) {
+            sb.append("一等座,");
         }
-        if ((!baseQueryLeft.getZe_num().equals("\u65e0")) && (!baseQueryLeft.getZe_num().equals("--"))) {
-            sb.append("\u4e8c\u7b49\u5ea7,");
+        if ((!baseQueryLeft.getZe_num().equals("无")) && (!baseQueryLeft.getZe_num().equals("--"))) {
+            sb.append("二等座,");
         }
-        if ((!baseQueryLeft.getTz_num().equals("\u65e0")) && (!baseQueryLeft.getTz_num().equals("--"))) {
-            sb.append("\u7279\u7b49\u5ea7,");
+        if ((!baseQueryLeft.getTz_num().equals("无")) && (!baseQueryLeft.getTz_num().equals("--"))) {
+            sb.append("特等座,");
         }
-        if ((!baseQueryLeft.getSwz_num().equals("\u65e0")) && (!baseQueryLeft.getSwz_num().equals("--"))) {
-            sb.append("\u5546\u52a1\u5ea7,");
+        if ((!baseQueryLeft.getSwz_num().equals("无")) && (!baseQueryLeft.getSwz_num().equals("--"))) {
+            sb.append("商务座,");
         }
         CAN_SEAT_TYPE = sb.toString();
     }
@@ -125,6 +133,7 @@ public class SubmitOrderActivity extends ActionBarActivity {
         PASSENGER_LIST = new ArrayList();
         TICKET_INFO_LIST = new ArrayList();
         TICKET_INFO_MAP = new HashMap();
+
         Map<String, String> m = new HashMap<String, String>();
 
         int row_num = 0;
@@ -139,7 +148,13 @@ public class SubmitOrderActivity extends ActionBarActivity {
                 m = new HashMap();
                 row_num = 0;
             }
-            Log.v("SubmitOrderActivity", p.getPassenger_name());
+            Log.v("SubmitOrderActivity","map is null?" + " " + (null == m));
+            Log.v("SubmitOrderActivity","row number is" + " " + (row_num));
+            Log.v("SubmitOrderActivity","array length is" + " " + (FROM.length));
+
+            Log.v("SubmitOrderActivity","array is null?" + " " + (null == FROM[row_num]));
+            Log.v("SubmitOrderActivity","pis null?" + " " + (null == p
+            ));
             m.put(FROM[row_num], p.getPassenger_name());
             HashMap<String, String> sub = new HashMap<String, String>();
             sub.put(p.getPassenger_id_no(), p.getPassenger_type_name());
@@ -154,11 +169,16 @@ public class SubmitOrderActivity extends ActionBarActivity {
     public void initView() {
         tb_ticketInfo = (TableLayout) findViewById(R.id.tb_submitOrder_ticketInfo);
         tv_stationTrainCode = (TextView) findViewById(R.id.tv_submitOrder_station_train_code);
-        lv_selectPassenger = (ListView) findViewById(R.id.lv_selectPassenger);
+        lv_selectPassenger = (ListView) findViewById(R.id.lv_submitOrder_passenger);
         lv_ticketInfo = (ListView) findViewById(R.id.lv_submitOrder_ticketInfo);
         bt_submit = (Button) findViewById(R.id.bt_submit);
         tv_stationTrainCode.setText(ShowTicketDetail.SUBMIT_BASEDATA.getQueryLeftNewDTO().getStation_train_code());
-        lv_selectPassenger.setAdapter(new com.cheart.do12306.app.adapter.SubmitOrderSelectPassengerAdapter(this, PASSENGER_LIST, R.layout.submit_order_select_passenger_item,FROM, TO));
+        Log.v(TAG, "GET" + (null == findViewById(R.id.lv_selectPassenger)));
+        Log.v(TAG, "LV" + (null == lv_selectPassenger));
+        Log.v(TAG, "LIST" + (null == PASSENGER_LIST));
+        Log.v(TAG, "FROM" + (null == FROM));
+        Log.v(TAG, "TO" + (null == TO));
+        lv_selectPassenger.setAdapter(new SubmitOrderSelectPassengerAdapter(this, PASSENGER_LIST, R.layout.submit_order_select_passenger_item,FROM, TO));
         lv_selectPassenger.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -236,6 +256,8 @@ class NameCheckedChangeListener implements CompoundButton.OnCheckedChangeListene
 class NameClickListener implements View.OnClickListener {
 
     public void onClick(View view) {
+
+
     }
 }
 

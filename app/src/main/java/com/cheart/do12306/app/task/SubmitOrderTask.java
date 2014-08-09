@@ -29,13 +29,16 @@ import com.cheart.do12306.app.domain.SubmitData;
 import com.cheart.do12306.app.domain.TicketOrder;
 import com.cheart.do12306.app.util.StringHelper;
 import com.cheart.do12306.app.view.QueryActivity;
+import com.cheart.do12306.app.view.ShowQueryResult;
 import com.cheart.do12306.app.view.ShowTicketDetail;
 import com.cheart.do12306.app.view.SubmitOrderActivity;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import java.util.logging.LogRecord;
@@ -72,6 +75,8 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
 
     private BaseData submitRequest;
     private SubmitData submitData;
+    public static List<SubmitData> submitDataList = new ArrayList<SubmitData>();
+    public static List<Passenger> passengerList = new ArrayList<Passenger>();
     private Passenger submitPassenger;
     private String key_check_isChange;
     private String result;
@@ -145,12 +150,25 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPreExecute() {
         init();
+        passengerList = CommunalData.p;
+        to = new TicketOrder();
+        to.setBaseData(ShowQueryResult.b1);
+        to.setBaseQueryLeft(ShowQueryResult.b1.getQueryLeftNewDTO());
+        to.setPassenger(CommunalData.p.get(0));
+        to.setSeatType("硬卧");
+        Log.v(TAG, "serae" + to.getBaseData().getSecretStr());
+        Log.v(TAG, "1" + to.getBaseData().getButtonTextInfo());
+        Log.v(TAG,"date" + to.getBaseQueryLeft().getStart_train_date());
+        Log.v(TAG, "2" + to.getBaseQueryLeft().getStation_train_code());
+        Log.v(TAG,"3" + to.getPassenger().getPassenger_name());
+//        to.setBaseData();
 
-        for (Iterator<String> it = SubmitOrderActivity.TICKET_INFO_MAP.keySet().iterator();
-             it.hasNext();){
-            to = (TicketOrder) SubmitOrderActivity.TICKET_INFO_MAP.get(it.next());
-            Log.v(TAG , "finally submit" + to.getName() + to.getSeatType());
-        }
+
+//        for (Iterator<String> it = SubmitOrderActivity.TICKET_INFO_MAP.keySet().iterator();
+//             it.hasNext();){
+//            to = (TicketOrder) SubmitOrderActivity.TICKET_INFO_MAP.get(it.next());
+//            Log.v(TAG , "finally submit" + to.getName() + to.getSeatType());
+//        }
 
 
         submitData = new SubmitData();
@@ -158,6 +176,8 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         submitRequest = to.getBaseData();
         randomCodeSubmitOrder = "";
         submitPassenger = to.getPassenger();
+
+        initSubmitData();
 
     }
 
@@ -218,7 +238,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         paramsConfirmSingleForQueueAsys.put("oldPassengerStr",
                 getOldPassengerStr());
         paramsConfirmSingleForQueueAsys.put("randCode", randomCodeSubmitOrder);
-        paramsConfirmSingleForQueueAsys.put("purpose_codes", "ADULT");
+        paramsConfirmSingleForQueueAsys.put("purpose_codes", "0X00");//!!!!
         paramsConfirmSingleForQueueAsys.put("key_check_isChange",
                 key_check_isChange);
         paramsConfirmSingleForQueueAsys.put("leftTicketStr",
@@ -243,7 +263,7 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         paramsAutoSubmitOrderRequest.put("secretStr", secretStr);
         paramsAutoSubmitOrderRequest.put("train_date", to.getDate());
         paramsAutoSubmitOrderRequest.put("tour_flag", "dc");
-        paramsAutoSubmitOrderRequest.put("purpose_codes", "ADULT");
+        paramsAutoSubmitOrderRequest.put("purpose_codes", "0X00");////
         Log.v(TAG, "from" + submitRequest.getQueryLeftNewDTO().getFrom_station_name());
         paramsAutoSubmitOrderRequest.put("query_from_station_name",
                 submitRequest.getQueryLeftNewDTO().getFrom_station_name());//
@@ -256,6 +276,8 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         Log.v(TAG, "" + getPassengerTicketStr());
         paramsAutoSubmitOrderRequest.put("passengerTicketStr",
                 getPassengerTicketStr());//
+
+        Log.v(TAG, "222" + getOldPassengerStr());
         paramsAutoSubmitOrderRequest.put("oldPassengerStr",
                 getOldPassengerStr());
         Map<String, String> cookies = new HashMap<String, String>();
@@ -270,21 +292,30 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
     }
 
     public String getPassengerTicketStr() {
-        initSubmitData();
+
         String result = "";
         String interval = ",";
         StringBuffer sb = new StringBuffer();
-        sb.append(
+        int c = 0;
+        for (int i = 0; i < submitDataList.size(); i++){
+            SubmitData submitData = submitDataList.get(i);
 
-                CommunalData.getSEAT_TYPE_MAP().get(to.getSeatType()) + interval + submitData.getConstStrig()
-                        + interval + submitData.getTicketTypeCode() + interval
-                        + submitData.getName() + interval
-                        + submitData.getPassengerIdTypeCode() + interval
-                        + submitData.getPassengerIdNo() + interval
-                        + submitData.getMobileNo() + interval + submitData.getSave()
-        );
+            c++;
+            sb.append(
+                  //  CommunalData.getSEAT_TYPE_MAP().get(to.getSeatType())
+                    CommunalData.SEAT_TYPE_MAP.get(CommunalData.t) + interval + submitData.getConstStrig() + interval
+                            + "3" + interval
+                            + submitData.getName() + interval
+                            + submitData.getPassengerIdTypeCode() + interval
+                            + submitData.getPassengerIdNo() + interval
+                            + submitData.getMobileNo() + interval + submitData.getSave() + "_"
+            );
+        }
+        Log.v(TAG, "CI" + c);
+        sb.delete(sb.length() - 1,sb.length());
         result = sb.toString();
-        Log.v(TAG, "TICKET_STR" + result);
+       // Log.v(TAG, "TICKET_STR" + result);
+      //  Log.v(TAG, "pass!!!----" + result);
 
         return result;
     }
@@ -293,18 +324,49 @@ public class SubmitOrderTask extends AsyncTask<String, Integer, String> {
         String result = "";
         String interval = ",";
         StringBuffer sb = new StringBuffer();
-        sb.append(
+        int c = 0;
+        Log.v(TAG, submitDataList.size() + "======");
+        for (int i = 0; i < submitDataList.size(); i++){
+            SubmitData submitData = submitDataList.get(i);
+            c++;
+            sb.append(
 
-                submitData.getName() + interval + submitData.getPassengerIdTypeCode()
-                        + interval + submitData.getPassengerIdNo() + interval
-                        + submitData.getPassengerType() + "_"
-        );
+                    submitData.getName() + interval + submitData.getPassengerIdTypeCode()
+                            + interval + submitData.getPassengerIdNo() + interval
+                            + submitData.getPassengerType() + "_"
+            );
+        }
+        Log.v(TAG, "OCI" + c);
         result = sb.toString();
+
+     //   Log.v(TAG, "ord!!!----" + result);
 
         return result;
     }
 
     public void initSubmitData() {
+
+        Log.v(TAG, "intiDataSize" + passengerList.size());
+
+        for (int i = 0; i < passengerList.size(); i++){
+           SubmitData s = new SubmitData();
+            Passenger p = passengerList.get(i);
+            s.setSeatTypeCode(CommunalData.getSEAT_TYPE_MAP().get(to.getSeatType()));// seat type
+            s.setTicketTypeCode(CommunalData.getTICKET_TYPE().get(to.getTicketType()));// ticket type
+            s.setName(p.getPassenger_name());
+            s.setPassengerIdTypeCode(p
+                    .getPassenger_id_type_code());
+            s.setPassengerIdNo(p.getPassenger_id_no());
+            s.setMobileNo(p.getPhone_no());
+            s.setPassengerType(p.getPassenger_type());
+            s.setSave("N");
+
+            submitDataList.add(s);
+        }
+
+        Log.v(TAG,"sssize" + submitDataList.size());
+
+
 
         submitData.setSeatTypeCode(CommunalData.getSEAT_TYPE_MAP().get(to.getSeatType()));// seat type
         submitData.setTicketTypeCode(CommunalData.getTICKET_TYPE().get(to.getTicketType()));// ticket type

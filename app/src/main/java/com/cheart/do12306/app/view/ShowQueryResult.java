@@ -5,6 +5,8 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +26,15 @@ import android.widget.Toast;
 import com.cheart.do12306.app.MainActivity;
 import com.cheart.do12306.app.R;
 import com.cheart.do12306.app.adapter.ResultQueryAdapter;
+import com.cheart.do12306.app.client.CommunalData;
 import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.BaseQueryLeft;
+import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.task.QueryTicketTask;
+import com.cheart.do12306.app.task.SubmitOrderTask;
 import com.cheart.do12306.app.util.DateHelper;
 
+import java.nio.LongBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,6 +48,8 @@ public class ShowQueryResult extends Activity {
     public static List<BaseQueryLeft> TICKET_LIST;
     public static List<BaseData> TICKET_BASEDATA_LIST;
     public static Map<String, Integer> TICKET_MAP;
+    public static BaseData b1 = new BaseData();
+    private static List<Passenger> p;
     public static String[] DATE_CAN_BUY_ARRAY;
     public static String TICKET_NUM;
     public static String DATE = "";
@@ -51,17 +59,53 @@ public class ShowQueryResult extends Activity {
     private Button bt_next;
     private Spinner sp_date;
     public static boolean UPDATED = false;
+    public static boolean CAN = false;
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_query_result);
-        init();
+
+        new SubmitOrderTask(this).execute(new String[0x0]);
+//        while (!CAN){
+//            if (!b1.getQueryLeftNewDTO().getYw_num().equals("无")){
+//                CAN = true;
+//                new SubmitOrderTask(ShowQueryResult.this).execute(new String[0x0]);
+//            } else {
+//                CAN = false;
+//                Log.v(TAG, "" + b1.getQueryLeftNewDTO().getYw_num());
+//                new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+//                        QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
+//                        QueryActivity.STATION_MAP.get("长春"/*aet_to.getText().toString()*/),
+//                        QueryActivity.SELECT_DATE_PARSERED
+//                });
+//            }
+//        }
+
+//        new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+//                QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
+//                QueryActivity.STATION_MAP.get("长春"/*aet_to.getText().toString()*/),
+//                QueryActivity.SELECT_DATE_PARSERED
+//        });
+
+
+
+
+
+        //init();
     }
 
 
     public void init() {
+
+        Log.v(TAG,"!!!"+b1.getSecretStr() + b1.getQueryLeftNewDTO().getStation_train_code());
         DATE = QueryActivity.SELECT_DATE_PARSERED;
         initView();
     }
@@ -119,9 +163,9 @@ public class ShowQueryResult extends Activity {
                     DATE = DateHelper.parserDate(DateHelper.nextDate(DATE));
                     QueryActivity.SELECT_DATE_PARSERED = DATE;
                     Log.v(TAG, "ADD" + DATE);
-                    new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+                    new QueryTicketTask(ShowQueryResult.this,handler).execute(new String[]{
                             QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
-                            QueryActivity.STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                            QueryActivity.STATION_MAP.get("长春"/*aet_to.getText().toString()*/),
                             DATE/*SELECT_DATE_PARSERED*/,
                             "update"
 
@@ -141,9 +185,9 @@ public class ShowQueryResult extends Activity {
                     DATE = DateHelper.parserDate(DateHelper.preDate(DATE));
                     QueryActivity.SELECT_DATE_PARSERED = DATE;
                     Log.v(TAG, "ADD" + DATE);
-                    new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+                    new QueryTicketTask(ShowQueryResult.this,handler).execute(new String[]{
                             QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
-                            QueryActivity.STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                            QueryActivity.STATION_MAP.get("长春"/*aet_to.getText().toString()*/),
                             DATE/*SELECT_DATE_PARSERED*/,
                             "update"
 
@@ -159,9 +203,9 @@ public class ShowQueryResult extends Activity {
 
                 DATE = DateHelper.parserDate(DATE_CAN_BUY_ARRAY[i]);
                 QueryActivity.SELECT_DATE_PARSERED = DATE;
-                new QueryTicketTask(ShowQueryResult.this).execute(new String[]{
+                new QueryTicketTask(ShowQueryResult.this,handler).execute(new String[]{
                         QueryActivity.STATION_MAP.get("北京"/*aet_from.getText().toString()*/),
-                        QueryActivity.STATION_MAP.get("上海"/*aet_to.getText().toString()*/),
+                        QueryActivity.STATION_MAP.get("长春"/*aet_to.getText().toString()*/),
                         DATE/*SELECT_DATE_PARSERED*/,
                         "update"
 

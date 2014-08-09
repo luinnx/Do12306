@@ -24,7 +24,6 @@ import com.cheart.do12306.app.domain.BaseAutoQuery;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 public class DoTicket extends ActionBarActivity {
@@ -317,6 +316,8 @@ public class DoTicket extends ActionBarActivity {
                 new String[]{},
                 new int[]{}
         ));
+
+      //  lv_trainCode.setAdapter();
 
 
     }
@@ -612,6 +613,108 @@ public class DoTicket extends ActionBarActivity {
             holder.ck_seat1.setText(null != arr[1] && !arr[1].equals("null") ? arr[1] : "");
             holder.ck_seat2.setText(null != arr[2] && !arr[2].equals("null") ? arr[2] : "");
             holder.ck_seat3.setText(null != arr[3] && !arr[3].equals("null") ? arr[3] : "");
+
+            convertView.setTag(holder);
+
+            return convertView;
+        }
+
+        private class SeatTypeItemListener implements View.OnClickListener{
+
+
+            @Override
+            public void onClick(View view) {
+                CheckBox c = (CheckBox) view;
+                if(c.isChecked()){
+                    baq.getSeatType().add(c.getText().toString());
+                } else{
+                    baq.getSeatType().remove(c.getText());
+                }
+
+                Log.v(TAG, "item" + c.getText() + " " + "isChecked" + c.isChecked());
+
+                Log.v(TAG, "now seat is :" + baq.getSeatType());
+
+
+
+            }
+        }
+    }
+
+
+
+
+    public class DoTicketTraminCodeAdapter extends SimpleAdapter {
+
+        private static final String TAG = "DoTicketTraminCodeAdapter";
+        Context context;
+        List<HashMap<String, String>> data;
+        private SeatTypeItemListener passengerClickLitener = new SeatTypeItemListener();
+        public DoTicketTraminCodeAdapter(Context context,
+                                       List<HashMap<String, String>> data,
+                                       int resource,
+                                       String[] from,
+                                       int[] to) {
+            super(context, data, resource, from, to);
+            this.context = context;
+            this.data = data;
+
+        }
+
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return data.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        private class ViewHolder {
+            CheckBox ck_train_code1;
+            CheckBox ck_train_code2;
+            CheckBox ck_train_code3;
+            CheckBox ck_train_code4;
+
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.
+                    LAYOUT_INFLATER_SERVICE);
+            convertView = li.inflate(R.layout.activity_do_ticket_train_code_item, null);
+
+            ViewHolder holder = null;
+            if(holder == null){
+                holder = new ViewHolder();
+                holder.ck_train_code1 = (CheckBox) convertView.findViewById(R.id.tv_do_ticket_seat0);
+                holder.ck_train_code2 = (CheckBox) convertView.findViewById(R.id.tv_do_ticket_seat1);
+                holder.ck_train_code3 = (CheckBox) convertView.findViewById(R.id.tv_do_ticket_seat2);
+                holder.ck_train_code4 = (CheckBox) convertView.findViewById(R.id.tv_do_ticket_seat3);
+                holder.ck_train_code1.setOnClickListener(passengerClickLitener);
+                holder.ck_train_code2.setOnClickListener(passengerClickLitener);
+                holder.ck_train_code3.setOnClickListener(passengerClickLitener);
+                holder.ck_train_code4.setOnClickListener(passengerClickLitener);
+
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+
+            String[] arr = data.get(position).get(DoTicket.SEAT_TYPE_LIST).split(",");
+            holder.ck_train_code1.setText(null != arr[0] && !arr[0].equals("null") ? arr[0] : "");
+            holder.ck_train_code2.setText(null != arr[1] && !arr[1].equals("null") ? arr[1] : "");
+            holder.ck_train_code3.setText(null != arr[2] && !arr[2].equals("null") ? arr[2] : "");
+            holder.ck_train_code4.setText(null != arr[3] && !arr[3].equals("null") ? arr[3] : "");
 
             convertView.setTag(holder);
 

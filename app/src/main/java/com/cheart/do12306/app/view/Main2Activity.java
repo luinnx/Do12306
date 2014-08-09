@@ -48,9 +48,12 @@ public class Main2Activity extends TabActivity {
         tabHost.addTab(tabHost.newTabSpec("query").setIndicator("QUERY").setContent(new Intent(this,
                 QueryActivity.class)));
         tabHost.addTab(tabHost.newTabSpec("doTicket").setIndicator("DO_TICKET").setContent(new Intent(this,
-                DoTicket.class)));
+                DoTicketSetBase.class)));
         tabHost.addTab(tabHost.newTabSpec("testquery").setIndicator("TEST_QUERY").setContent(new Intent(this,
                 TestDoQuery.class)));
+
+        tabHost.addTab(tabHost.newTabSpec("showdo").setIndicator("SHOW_DO").setContent(new Intent(this,
+                DoTicketShowDo.class)));
 
         tabHost.setCurrentTab(0);
     }

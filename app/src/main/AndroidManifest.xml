@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.cheart.do12306.app.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,39 +17,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.QueryActivity"
+            android:name=".view.QueryActivity"
             android:label="@string/title_activity_query" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.ResultQueryActivityListActivity"
+            android:name=".view.ResultQueryActivityListActivity"
             android:label="@string/title_resultqueryactivity_list" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.ResultQueryActivityDetailActivity"
+            android:name=".view.ResultQueryActivityDetailActivity"
             android:label="@string/title_resultqueryactivity_detail"
-            android:parentActivityName="com.cheart.do12306.app.ResultQueryActivityListActivity" >
+            android:parentActivityName=".ResultQueryActivityListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cheart.do12306.app.view.ResultQueryActivityListActivity" />
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.ShowQueryResult"
+            android:name=".view.ShowQueryResult"
             android:label="@string/title_activity_show_query_result" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.ShowTicketDetail"
+            android:name=".view.ShowTicketDetail"
             android:label="@string/title_activity_show_ticket_detail" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.SelectPassengerActivity"
+            android:name=".view.SelectPassengerActivity"
             android:label="@string/title_activity_select_passenger" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.SubmitOrderActivity"
+            android:name=".view.SubmitOrderActivity"
             android:label="@string/title_activity_submit_order" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.Main2Activity"
+            android:name=".view.Main2Activity"
             android:label="@string/title_activity_main2" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,16 +58,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.UserCenter"
+            android:name=".view.UserCenter"
             android:label="@string/title_activity_user_center" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.DoTicket"
+            android:name=".view.DoTicket"
             android:label="@string/title_activity_do_ticket" >
         </activity>
         <activity
-            android:name="com.cheart.do12306.app.view.TestDoQuery"
+            android:name=".view.TestDoQuery"
             android:label="@string/title_activity_test_do_query" >
+        </activity>
+        <activity
+            android:name=".view.DoTicketSetBase"
+            android:label="@string/title_activity_do_ticket_set_base" >
+        </activity>
+        <activity
+            android:name=".view.DoTicketSetDo"
+            android:label="@string/title_activity_do_ticket_set_do" >
+        </activity>
+        <activity
+            android:name=".view.SelectSeatType"
+            android:label="@string/title_activity_select_seat_type" >
+        </activity>
+        <activity
+            android:name=".view.SelectPassengerSetDo"
+            android:label="@string/title_activity_select_seat_type" >
+        </activity>
+        <activity
+            android:name=".view.SelectTrainCode"
+            android:label="@string/title_activity_select_seat_type" >
+        </activity>
+        <activity
+            android:name=".view.DoTicketShowDo"
+            android:label="@string/title_activity_do_ticket_show_do" >
         </activity>
     </application>
 

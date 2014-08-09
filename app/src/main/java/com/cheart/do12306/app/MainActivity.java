@@ -28,6 +28,9 @@ import com.cheart.do12306.app.core.ClientCore;
 import com.cheart.do12306.app.core.HttpsHeader;
 import com.cheart.do12306.app.domain.Passenger;
 import com.cheart.do12306.app.util.DateHelper;
+import com.cheart.do12306.app.view.DoTicket;
+import com.cheart.do12306.app.view.DoTicketSetBase;
+import com.cheart.do12306.app.view.DoTicketSetDo;
 import com.cheart.do12306.app.view.QueryActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -36,6 +39,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -153,7 +157,7 @@ public class MainActivity extends Activity {
                 weekDays[week] + ")") + ",");
 
 
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 28; i++) {
             int dayCountOfMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
             if (day >= dayCountOfMonth) {
                 month++;
@@ -290,7 +294,7 @@ public class MainActivity extends Activity {
             Log.v(TAG, "finally ok!!");
             if (success) {
                 CommunalData.setIsLogin(true);
-                Intent intent = new Intent(MainActivity.this, QueryActivity.class);
+                Intent intent = new Intent(MainActivity.this, DoTicketSetBase.class);
                 MainActivity.this.startActivity(intent);
                 //    MainActivity.this.finish();
             }
@@ -381,8 +385,16 @@ public class MainActivity extends Activity {
             private Thread runThread;
 
             LoginThread(String userName, String password, String randomCode) {
-                this.userName = "jhai2391liu";//userName;
-                this.password = "aiing1391liujh";//password;
+
+                //  jhai2391l
+             //   aiing1391liujh
+
+
+                this.userName = "ly_19940815";//userName;
+                this.password = "hjy56_79";//password;
+
+//                this.userName = "jhai2391l";//userName;
+//                this.password = "aiing1391liujh";//password;
                 this.randomCode = randomCode;
             }
 
@@ -523,13 +535,34 @@ public class MainActivity extends Activity {
             public void initPassengerMap(List<Passenger> list) {
 
                 Map<String, Integer> map = new HashMap<String, Integer>();
-
+                CommunalData.p = new ArrayList<Passenger>();
+                int c = 0;
                 for (int i = 0; i < list.size(); i++) {
-                    map.put(list.get(i).getPassenger_name(), i);
+                    Passenger p = list.get(i);
+                    map.put(p.getPassenger_name(), i);
+                    if (p.getPassenger_name().equals("李悦")){
+                        CommunalData.p.add(p);
+                        c++;
+                    }else if (p.getPassenger_name().equals("孙思宇")){
+                    CommunalData.p.add(p);
+                        c++;
+                    }
+
+//                    if (p.getPassenger_name().equals("刘晓航")){
+//                        CommunalData.p.add(p);
+//                        c++;
+//                    }else if (p.getPassenger_name().equals("曹宇")){
+//                        CommunalData.p.add(p);
+//                        c++;
+//                    }
+
+
                 }
 
                 CommunalData.setPASSENGER_MAP(map);
                 Log.v(TAG, "" + CommunalData.getPASSENGER_MAP());
+                Log.v(TAG, "ppppppp---" + CommunalData.p.size());
+
 
             }
 

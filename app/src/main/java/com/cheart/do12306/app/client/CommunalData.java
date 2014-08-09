@@ -2,9 +2,12 @@ package com.cheart.do12306.app.client;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.SpannableString;
 import android.util.Log;
 
+import com.cheart.do12306.app.domain.BaseData;
 import com.cheart.do12306.app.domain.Passenger;
+import com.cheart.do12306.app.view.SelectSeatType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +16,10 @@ import java.io.InputStreamReader;
 import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by cheart on 5/28/2014.
@@ -25,6 +30,19 @@ public class CommunalData {
     public static boolean isLogin = false;
     public static Map<String, String> STATION_MAP;
     public static String[] STATION_ARRAY;
+    public static String[] DO_TICKET_ALL_TRAIN_CODE;
+    public static String[] ALL_SEAT_TYPE = new String[]{
+            "二等座",
+            "一等座",
+            "特等座",
+            "硬座",
+            "软座",
+            "硬卧",
+            "软卧",
+            "高级软卧",
+            "商务座"
+    };
+
     public static String CAN_BUY_DATE = "";
     public static String CAN_BUY_DATE_SIMPLE = "";
     public static List<Passenger> PASSENGER_LIST;
@@ -33,9 +51,28 @@ public class CommunalData {
     public static Map<String, String> SEAT_TYPE_CODE_MAP;
     public static Map<String, String> TICKET_TYPE;
 
+    public static Set<String> SELECTED_TRAIN_CODE_SET;
+    public static Set<String> SELECTED_PASSENGER_SET;
+    public static Set<String> SELECTED_SEAT_TYPE_SET;
+
+    public static List<BaseData> DO_TICKET_BASEDATA_LIST;
+
+    public static Map<String,Map<String,String>> DO_TICKET_RESULT_QUERY_MAP;
 
 
+    public static List<Passenger> p = new ArrayList<Passenger>();
+    public static List<BaseData> b = new ArrayList<BaseData>();
 
+
+    public static String DO_TICKET_LOG = "Strat Do It";
+
+    public static String from = "北京";
+    public static String to = "长春";
+    public static String date = "2014-08-31";
+
+    public static String c1 = "D29";
+    public static String c2 = "D73";
+    public static String t = "二等座";
     static {
 
         STATION_MAP = new HashMap<String, String>();
@@ -45,6 +82,14 @@ public class CommunalData {
         SEAT_TYPE_MAP = new HashMap<String, String>();
         SEAT_TYPE_CODE_MAP = new HashMap<String, String>();
         TICKET_TYPE = new HashMap<String, String>();
+
+        SELECTED_PASSENGER_SET = new HashSet<String>();
+        SELECTED_SEAT_TYPE_SET = new HashSet<String>();
+        SELECTED_TRAIN_CODE_SET = new HashSet<String>();
+
+        DO_TICKET_BASEDATA_LIST = new ArrayList<BaseData>();
+
+        DO_TICKET_RESULT_QUERY_MAP = new HashMap<String, Map<String, String>>();
 
         SEAT_TYPE_MAP = new HashMap<String, String>();
         SEAT_TYPE_MAP.put("二等座", "O");
@@ -194,4 +239,17 @@ public class CommunalData {
         }
 
     }
+
+    public static String[] parserAllTrainCodeBaseData(List<BaseData> baseDatas){
+
+        StringBuffer sb = new StringBuffer();
+        for (BaseData baseData : baseDatas){
+            sb.append(baseData.getQueryLeftNewDTO().getStation_train_code() + ",");
+
+        }
+        return sb.toString().split(",");
+
+    }
+
+
 }

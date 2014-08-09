@@ -31,5 +31,9 @@
     <string name="title_activity_user_center">UserCenter</string>
     <string name="title_activity_do_ticket">DoTicket</string>
     <string name="title_activity_test_do_query">TestDoQuery</string>
+    <string name="title_activity_do_ticket_set_base">DoTicketSetBase</string>
+    <string name="title_activity_do_ticket_set_do">DoTicketSetDo</string>
+    <string name="title_activity_select_seat_type">SelectSeatType</string>
+    <string name="title_activity_do_ticket_show_do">DoTicketShowDo</string>
 
 </resources>
